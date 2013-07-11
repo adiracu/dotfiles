@@ -1,0 +1,2 @@
+osx:uname:Darwin
+arch:cat os-release | head -n 1 | cut -d "=" -f2:Arch Linux
