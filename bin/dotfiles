@@ -99,6 +99,7 @@ function do_stuff() {
   for file in "${files[@]}"; do
     base="$(basename $file)"
     dest="$HOME/$base"
+
     # Run _test function only if declared.
     if [[ $(declare -f "$1_test") ]]; then
       # If _test function returns a string, skip file and print that message.

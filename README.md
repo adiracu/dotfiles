@@ -17,3 +17,11 @@ Others:
 1. files in `caches` are cached files.
 2. files in `conf` just sit there. If a config file doesn't need to go to `~/`, put it there.
 3. files in `bin` are executable shell scripts
+
+
+Nota Bene:
+1. Folder `os_specific` contains subfolders with OS specific scripts
+	: The OSs detection are defined in `os_specific/detection`
+		The format is: os_key: cmd_to_run : expected_string_to_contain
+	: The subfolders in os_specific are named according to "os_key"
+
