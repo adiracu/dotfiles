@@ -1,4 +1,6 @@
 # Universal aliases and functions
+NOT_OW_YET=" Not overwritten by os specific action. "
+
 
 # Useful shortcuts/typos
 alias ll='ls -l'
@@ -20,7 +22,8 @@ psefgrep() {
 	fi
 
 # App open shortcuts
-function opensublime() { echo " Not overwritten by os specific action. " }
+function opensublime() { echo "${NOT_OW_YET}"  }
+alias packagesBySize="echo ${NOT_OW_YET}"
 
 # Calculator
 convertDecToHex() { echo "obase=16; ibase=10; $1" | bc ; }
