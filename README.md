@@ -28,8 +28,10 @@ Others:
 
 Nota Bene:
 
-*. Folder `os_specific` contains subfolders with OS specific scripts
-	: The OSs detection are defined in `os_specific/detection_rules`
-		The format is: os_key: cmd_to_run : expected_string_to_contain
-	: The subfolders in os_specific are named according to "os_key"
-	: the script `os_specific/which_os.sh` returns the corresponding "os_key" to use
+You can also put os specific stuff inside each of the `init` etc. folder
+OS detection rules are defined in `conf/os_detection_rules`
+		: The format is: os_key: cmd_to_run : expected_string_to_contain
+	: The subfolders need to have the name `os_key`
+		: scripts inside these subfolders get executed after the normal ones do
+		: these folders will be ignored initially as they do not start with a dot
+	: the script `init/detect_os.sh` sets the `conf/os_detected` value
