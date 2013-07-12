@@ -12,6 +12,14 @@
 # \u - username of curr user
 # \$ - effective uid (# or $; root or normal user)
 
+# Assign a default value
+THEME_TO_USE="--theme=reset"
+
+if test "${SSH_TTY}"; then
+	THEME_TO_USE="--theme=ssh"
+fi
+
+
 if test $# -ge "1"; then
 	if test $1 == "--help" ; then
 		echo "Valid options are [--theme={reset | ssh | none}]"
@@ -23,6 +31,8 @@ if test $# -ge "1"; then
 		echo "The default theme used is:"
 		echo "      - if \$SSH_TTY is set, 'ssh'"
 		echo "      - otherwise, 'reset'"
+	elif test $1 == "--theme=reset" -o $1 == "--theme=ssh" -o $1 == "--theme=none"; then
+		THEME_TO_USE=$1
 	fi
 fi
 
@@ -37,23 +47,16 @@ COLOR_OFF="\[\033[0m\]"
 COLOR_EVERYTHING=${COLOR_OFF}
 COLOR_HOSTNAME=${COLOR_OFF}
 
-THEME_TO_USE="--color=reset"
-
-if test "${SSH_TTY}"; then
-	THEME_TO_USE="--color=ssh"
-fi
-
-
 case "${THEME_TO_USE}" in
-	"--color=reset")
+	"--theme=reset")
 		COLOR_EVERYTHING=${COLOR_EMPH}
 		COLOR_HOSTNAME=${COLOR_EMPH}
 	;;
-	"--color=ssh")
+	"--theme=ssh")
 		COLOR_EVERYTHING=${COLOR_EMPH}
 		COLOR_HOSTNAME=${COLOR_RED}
 	;;
-	"--color=none")
+	"--theme=none")
 		COLOR_EVERYTHING=${COLOR_OFF}
 		COLOR_HOSTNAME=${COLOR_OFF}
 	;;
