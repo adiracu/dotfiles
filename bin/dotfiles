@@ -60,6 +60,7 @@ function skip() {
 
 # Initialize.
 function init_do() {
+  e_success "Initializing $2"
   source "$2"
 }
 
@@ -74,7 +75,18 @@ function copy_test() {
 }
 function copy_do() {
   e_success "Copying ~/$1."
-  cp "$2" ~/
+  echo "IN COPY 1: $1 , 2: $2"
+  if test -d "${2}"; then
+    echo cp -r "${2}" "~/"
+    sudo cp -r "${2}" "~/"
+  else
+    a=`echo sudo cp "${2}" "~/"`
+    echo $a
+    eval $a
+    # sudo cp "${2}" "~/"
+  fi
+
+
 }
 
 # Link files.
@@ -83,18 +95,28 @@ function link_test() {
   [[ "$1" -ef "$2" ]] && echo "same file"
 }
 function link_do() {
-  e_success "Linking ~/$1."
-  ln -sf ${2#$HOME/} ~/
+  true
+  # e_success "Linking ~/$1."
+  # echo "IN LINK 1: $1 , 2: $2"
+  # -s : create a symbolic link
+  # -f : if the target file exists, unlink it so that this link can occur
+  # $2 : the full path, so strip the $HOME directory from it
+  # echo ln -sf ${2#$HOME/} ~/
 }
 
 # Copy, link, init, etc.
 function do_stuff() {
   local base dest skip
   local files=(~/.dotfiles/$1/*)
+
+  echo "FIles are: ${files[@]}"
+
   # No files? abort.
   if (( ${#files[@]} == 0 )); then return; fi
+
   # Run _header function only if declared.
   [[ $(declare -f "$1_header") ]] && "$1_header"
+
   # Iterate over files.
   for file in "${files[@]}"; do
     base="$(basename $file)"
@@ -119,9 +141,13 @@ function do_stuff() {
         mv "$dest" "$backup_dir"
       fi
     fi
+
     # Do stuff.
     "$1_do" "$base" "$file"
   done
+
+
+
 }
 
 # Enough with the functions, let's do stuff.
@@ -167,7 +193,7 @@ if [[ ! "$(type -P git)" ]]; then
 fi
 
 # Update existing sudo time stamp if set, otherwise do nothing.
-while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+# while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 # Initialize.
 if [[ ! -d ~/.dotfiles ]]; then
@@ -180,8 +206,10 @@ else
   # Make sure we have the latest files.
   e_header "Updating dotfiles"
   cd ~/.dotfiles
-  git pull
-  git submodule update --init --recursive --quiet
+
+  # TODO: UNCOMMENT THIS
+  # git pull
+  # git submodule update --init --recursive --quiet
 fi
 
 # Utilities, helpers.
@@ -203,8 +231,11 @@ backup_dir="$HOME/.dotfiles/backups/$(date "+%Y_%m_%d-%H_%M_%S")/"
 backup=
 
 # Execute code for each file in these subdirectories.
+e_header "Doing init"
 do_stuff "init"
+e_header "Doing copy"
 do_stuff "copy"
+e_header "Doing link"
 do_stuff "link"
 
 # Alert if backups were made.

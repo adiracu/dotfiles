@@ -2,7 +2,7 @@
 
 (
 	#empty the file
-	echo "" > ../conf/os_detected
+	echo "" > ~/.dotfiles/conf/labels_detected
 
 	IFS=$':'
 
@@ -11,11 +11,11 @@
 		result=`eval ${CMD_TO_RUN} 2>/dev/null`
 
 		if [[ "${result}" == *${EXPECTED_STRING_TO_CONTAIN}*  ]]; then
-			echo "${OS_KEY}" > ../conf/os_detected
+			echo "${OS_KEY}" > ~/.dotfiles/conf/labels_detected
 		# 	echo "IT IS ${OS_KEY}"
 		# else
 		# 	echo "IT IS NOT ${OS_KEY}"
 		fi
 
-	done < ../conf/os_detection_rules
+	done < ~/.dotfiles/conf/label_detection_rules
 )

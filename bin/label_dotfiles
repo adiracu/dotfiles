@@ -1,0 +1,37 @@
+
+# returns the relevant dotfiles for the currently set labels from a path
+# e.g. label_dotfiles ~/.dotfiles/init
+#   if the currently set label is osx
+#    it will return all the files found in ~/.dotfiles/init/osx
+
+if test $# -ne 1; then
+	echo "Need a path to search in." 1>&2
+	exit 1
+fi
+
+
+if test -f ~/.dotfiles/conf/labels_detected; then
+
+	pushd "${1}" &>/dev/null
+
+		OLD_IFS="$IFS"
+	 	IFS=$'\n'
+
+	 	for label in `cat ~/.dotfiles/conf/labels_detected` ; do
+	 		if test -d "${label}"; then
+
+		 		pushd "${label}" &>/dev/null
+			 		for file in *; do
+						if test -f "$file"; then
+							echo `pwd`/"${file}"
+			      	fi
+			   	done
+		   	popd &>/dev/null
+
+	   	fi
+	 	done
+
+	 	IFS="$OLD_IFS"
+
+ 	popd &>/dev/null
+fi
