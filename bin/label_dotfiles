@@ -3,6 +3,7 @@
 # e.g. label_dotfiles ~/.dotfiles/init
 #   if the currently set label is osx
 #    it will return all the files found in ~/.dotfiles/init/osx
+#    Folders are ignored
 
 if test $# -ne 1; then
 	echo "Need a path to search in." 1>&2
@@ -21,10 +22,9 @@ if test -f ~/.dotfiles/conf/labels_detected; then
 	 		if test -d "${label}"; then
 
 		 		pushd "${label}" &>/dev/null
-			 		for file in *; do
-						if test -f "$file"; then
-							echo `pwd`/"${file}"
-			      	fi
+			 		for file in `find . -maxdepth 1  -type f`; do
+			 			name=`basename ${file}`
+						echo `pwd`/"${name}"
 			   	done
 		   	popd &>/dev/null
 

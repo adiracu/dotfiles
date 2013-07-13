@@ -60,7 +60,7 @@ function skip() {
 
 # Initialize.
 function init_do() {
-  e_success "Initializing $2"
+  e_success "Initializing ${2#$HOME/.dotfiles/}"
   source "$2"
 }
 
@@ -75,18 +75,7 @@ function copy_test() {
 }
 function copy_do() {
   e_success "Copying ~/$1."
-  echo "IN COPY 1: $1 , 2: $2"
-  if test -d "${2}"; then
-    echo cp -r "${2}" "~/"
-    sudo cp -r "${2}" "~/"
-  else
-    a=`echo sudo cp "${2}" "~/"`
-    echo $a
-    eval $a
-    # sudo cp "${2}" "~/"
-  fi
-
-
+  cp -r "${2}" "${HOME}"
 }
 
 # Link files.
@@ -95,30 +84,40 @@ function link_test() {
   [[ "$1" -ef "$2" ]] && echo "same file"
 }
 function link_do() {
-  true
-  # e_success "Linking ~/$1."
-  # echo "IN LINK 1: $1 , 2: $2"
+  e_success "Linking ~/$1."
   # -s : create a symbolic link
   # -f : if the target file exists, unlink it so that this link can occur
   # $2 : the full path, so strip the $HOME directory from it
-  # echo ln -sf ${2#$HOME/} ~/
+  ln -sf ${2#$HOME/} "${HOME}"
 }
 
 # Copy, link, init, etc.
 function do_stuff() {
   local base dest skip
-  local files=(~/.dotfiles/$1/*)
+  local searchPath="${HOME}/.dotfiles/$1"
 
-  echo "FIles are: ${files[@]}"
+  # All files that are in search path. (dotfiles or not)
+  allImmediateFiles=`find ${searchPath} -maxdepth 1 -type f`
+  # And the dot folders there.
+  allImmediateDotfolders=`find ${searchPath} -maxdepth 1 -type d -name ".*"`
+  # All dotfiles belonging to the current labels
+  allLabelDotfiles=`"${HOME}"/.dotfiles/bin/label_dotfiles "${searchPath}"`
+
+  allFiles="${allImmediateFiles}
+${allImmediateDotfolders}
+${allLabelDotfiles}"
 
   # No files? abort.
-  if (( ${#files[@]} == 0 )); then return; fi
+  if [[ ! $allFiles ]]; then return; fi
 
   # Run _header function only if declared.
   [[ $(declare -f "$1_header") ]] && "$1_header"
 
   # Iterate over files.
-  for file in "${files[@]}"; do
+  OLD_IFS="${IFS}"
+  IFS=$'\n'
+
+  for file in ${allFiles}; do
     base="$(basename $file)"
     dest="$HOME/$base"
 
@@ -146,8 +145,7 @@ function do_stuff() {
     "$1_do" "$base" "$file"
   done
 
-
-
+  IFS="${OLD_IFS}"
 }
 
 # Enough with the functions, let's do stuff.
@@ -193,7 +191,7 @@ if [[ ! "$(type -P git)" ]]; then
 fi
 
 # Update existing sudo time stamp if set, otherwise do nothing.
-# while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 # Initialize.
 if [[ ! -d ~/.dotfiles ]]; then
