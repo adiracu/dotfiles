@@ -1,17 +1,13 @@
 #!/bin/bash
 
-echo 'Dotfiles - "Cowboy" Ben Alman - http://benalman.com/'
+echo 'Dotfiles'
 
 if [[ "$1" == "-h" || "$1" == "--help" ]]; then cat <<HELP
 
 Usage: $(basename "$0")
 
 See the README for documentation.
-https://github.com/cowboy/dotfiles
-
-Copyright (c) 2012 "Cowboy" Ben Alman
-Licensed under the MIT license.
-http://benalman.com/about/license/
+https://github.com/rackenstein/dotfiles
 HELP
 exit; fi
 
@@ -58,13 +54,13 @@ function skip() {
   fi
 }
 
-# Initialize.
+# Initialization scripts
 function init_do() {
   e_success "Initializing ${2#$HOME/.dotfiles/}"
   source "$2"
 }
 
-# Copy files.
+# Copying files/folders
 function copy_header() { e_header "Copying files into home directory"; }
 function copy_test() {
   if [[ -e "$2" && ! "$(cmp "$1" "$2" 2> /dev/null)" ]]; then
@@ -78,7 +74,7 @@ function copy_do() {
   cp -r "${2}" "${HOME}"
 }
 
-# Link files.
+# Linking files/folders
 function link_header() { e_header "Linking files into home directory"; }
 function link_test() {
   [[ "$1" -ef "$2" ]] && echo "same file"
@@ -91,7 +87,8 @@ function link_do() {
   ln -sf ${2#$HOME/} "${HOME}"
 }
 
-# Copy, link, init, etc.
+# Get all the valid files from the path and run
+# init_do, copy_do or link_do on them
 function do_stuff() {
   local base dest skip
   local searchPath="${HOME}/.dotfiles/$1"
@@ -148,7 +145,9 @@ ${allLabelDotfiles}"
   IFS="${OLD_IFS}"
 }
 
-# Enough with the functions, let's do stuff.
+
+# Functions Declaration END
+# -----------------------------------
 
 # Ensure that we can actually, like, compile anything.
 if [[ ! "$(type -P gcc)" && "$OSTYPE" =~ ^darwin ]]; then
@@ -193,22 +192,22 @@ fi
 # Update existing sudo time stamp if set, otherwise do nothing.
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
-# Initialize.
+# Clone if this is a new install
 if [[ ! -d ~/.dotfiles ]]; then
   new_dotfiles_install=1
   # ~/.dotfiles doesn't exist? Clone it!
   e_header "Downloading dotfiles"
   git clone --recursive git@github.com:rackenstein/dotfiles.git ~/.dotfiles
-  cd ~/.dotfiles
 else
-  # Make sure we have the latest files.
+# Or update otherwise
   e_header "Updating dotfiles"
-  cd ~/.dotfiles
 
-  # TODO: UNCOMMENT THIS
-  # git pull
-  # git submodule update --init --recursive --quiet
+  git pull
+  git submodule update --init --recursive --quiet
 fi
+
+# Go to the main folder
+cd ~/.dotfiles
 
 # Utilities, helpers.
 source ~/.dotfiles/source/10_misc.sh
@@ -241,7 +240,7 @@ if [[ "$backup" ]]; then
   echo -e "\nBackups were moved to ~/${backup_dir#$HOME/}"
 fi
 
-# Lest I forget to do a few additional things...
+# If it's a new install, end with some useful reminders
 if [[ "$new_dotfiles_install" && -e "conf/firsttime_reminder.sh" ]]; then
   e_header "First-Time Reminders"
   source "conf/firsttime_reminder.sh"
