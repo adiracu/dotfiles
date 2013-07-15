@@ -99,7 +99,7 @@ function do_stuff() {
   # And the dot folders there.
   allImmediateDotfolders=`find ${searchPath} -maxdepth 1 -type d -name ".*"`
   # All dotfiles belonging to the current labels
-  allLabelDotfiles=`"${HOME}"/.dotfiles/bin/label_dotfiles "${searchPath}"`
+  allLabelDotfiles=`"${HOME}"/.dotfiles/bin/get_label_dotfiles "${searchPath}"`
 
   allFiles="${allImmediateFiles}
 ${allImmediateDotfolders}

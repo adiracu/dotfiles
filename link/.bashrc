@@ -18,7 +18,7 @@ function src() {
    local OLD_IFS="$IFS"
    IFS=$'\n'
 
-    for file in `label_dotfiles ~/.dotfiles/source` ; do
+    for file in `get_label_dotfiles ~/.dotfiles/source` ; do
       if test -f "${file}"; then
     	 source $file
       fi

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # returns the relevant dotfiles for the currently set labels from a path
-# e.g. label_dotfiles ~/.dotfiles/init
+# e.g. get_label_dotfiles ~/.dotfiles/init
 #   if the currently set label is osx
 #    it will return all the files and folders found in ~/.dotfiles/init/osx
 

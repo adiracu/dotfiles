@@ -21,7 +21,10 @@ N.B. Files overwritten by `copy` and `link` are saved into the `backups` directo
 
 Also, the current setup (.bashrc) will :
 
-* source files in `source` whenever a new shell is opened, in alphanumeric order.
+* source files in `source` in alphanumeric order.
+* source files in `source/valid_label` (see Labels below)
+
+whenever a new shell is opened.
 
 
 Others:
