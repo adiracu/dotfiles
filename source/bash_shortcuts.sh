@@ -18,7 +18,7 @@ alias psef='ps -eF'
 manjump () {    # Bash
     local pages string
     if test $# -ne 2; then
-    	echo "Usage:  manjump  word_to_search_for  page_name"
+    	echo "Usage:  manjump  regex_to_search_for  page_name"
     	return;
     fi
     pages=(${@:2})
