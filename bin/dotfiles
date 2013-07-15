@@ -94,6 +94,11 @@ function do_stuff() {
   local base dest skip
   local searchPath="${HOME}/.dotfiles/$1"
 
+  if test ! -d ${searchPath}; then
+    e_error "${searchPath} does not exist"
+    return;
+  fi
+
   # All files that are in search path. (dotfiles or not)
   allImmediateFiles=`find ${searchPath} -maxdepth 1 -type f`
   # And the dot folders there.
@@ -241,11 +246,8 @@ backup_dir="$HOME/.dotfiles/backups/$(date "+%Y_%m_%d-%H_%M_%S")/"
 backup=
 
 # Execute code for each file in these subdirectories.
-e_header "Doing init"
 do_stuff "init"
-e_header "Doing copy"
 do_stuff "copy"
-e_header "Doing link"
 do_stuff "link"
 
 # Alert if backups were made.
