@@ -1,5 +1,3 @@
-
-
 NOT_YET_DONE="Not overwritten by OS specific function"
 # Typos / Shortcuts
 
@@ -22,11 +20,8 @@ if psef | grep $1 &>/dev/null ; then
 fi
 }
 
-
-
 # APP SHORTCUTS
-opensublime () { echo -n "$NOT_YET_DONE" }
-
+opensublime () { echo -n "$NOT_YET_DONE" ; }
 
 # Calculator
 calc() { echo "scale=4;$1" | bc ; }
@@ -34,7 +29,7 @@ calc() { echo "scale=4;$1" | bc ; }
 convertDecToHex() { echo "obase=16; ibase=10; $1" | bc ; }
 convertDecToBin() { echo "obase=2 ; ibase=10; $1" | bc ; }
 convertHexToDec() { echo "obase=10; ibase=16; $1" | bc ; }
-convertHexToBin() { echo "obase= 2; ibase=16; $1" | bc ; }
+convertHexToBin() { echo "obase=2 ; ibase=16; $1" | bc ; }
 convertBinToDec() { echo "obase=10; ibase= 2; $1" | bc ; }
 convertBinToHex() { echo "obase=16; ibase= 2; $1" | bc ; }
 
@@ -53,7 +48,6 @@ svnreposize() { svn list -vR $1 | awk '{tmp=match($3,/[0-9]/);if(tmp){sum+=$3; i
 
 # SSH
 sshnopub() { ssh -o PubkeyAuthentication=no $1 ; }
-
 
 # useful little ones
 sha1oftext() { echo -n $1 | sha1sum | awk '{print toupper($1)}' ; }
