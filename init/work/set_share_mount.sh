@@ -8,8 +8,6 @@ shareNames="//10.220.73.111/ORG:${HOME}/Shares/org
 //10.220.73.111/ORG/PUBLIC:${HOME}/Shares/public
 //10.220.73.111/RND:${HOME}/Shares/rnd
 //10.220.73.111/RND/RD_DE_CS/HIS:${HOME}/Shares/his
-//10.220.73.111/RND/RD_DE_CS/HIS/kits:${HOME}/Shares/hiskits
-//10.220.73.111/RND/RD_DE_CS/HIS/naada:${HOME}/Shares/hisnada
 "
 
 (
@@ -25,7 +23,7 @@ username=
 password=
 
 for serverSharePointTuple in $shareNames; do
-	
+
 	server=${serverSharePointTuple%:*}
 	mountPoint=${serverSharePointTuple#*:}
 	# strip spaces; sometimes typos
@@ -41,7 +39,7 @@ for serverSharePointTuple in $shareNames; do
 		echo "For the server '${server}', a different mount point is used : '${currMountPoint}' , expected : '${mountPoint}'" 1>&2
 		echo " No change performed" 1>&2
 	else
-		
+
 		# Does not contain the IP - Host combination
 		if [[ ! "${first_time_writing}" ]]; then
 			time=`date`
@@ -53,13 +51,13 @@ for serverSharePointTuple in $shareNames; do
 			# -N 1   : only allow 1 character
 			# -t 10  : timeout of 10 seconds
 			read -r -s -N 1 -t 10 response
-			
+
 			if test ${response} = "c" ; then
 				echo -n "Windows username: "
 				read -r username
 				echo -n "Windows password: "
 				read -r password
-			else 
+			else
 				echo " Exitting"
 				exit 1
 			fi
