@@ -46,6 +46,6 @@ For example, in order to detect if the current computer is running OS X, it's is
 Each of the `init`, `copy` and `link` folders can contain label specific files, under a directory named with the appropriate `label name`.
 
 To be more precise, the `dotfiles` script passes to de `init`, `copy` and `link` functions:
-	1. all files found in the respective folder(e.g. /init) at depth 1, regardles of they're name
+	1. all files found in the respective folder(e.g. /init) at depth 1, regardles of their  name
 	2. all dot folders found in the respective folder at depth 1; their name has to start with "."
-	3. all the files found in the respective label folders, at depth 1 (e.g. files only at /init/osx/ )
+	3. all the files and folders found in the respective label folders

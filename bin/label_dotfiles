@@ -22,7 +22,7 @@ if test -f ~/.dotfiles/conf/labels_detected; then
 	 		if test -d "${label}"; then
 
 		 		pushd "${label}" &>/dev/null
-			 		for file in `find . -maxdepth 1  -type f`; do
+			 		for file in `find . -maxdepth 1 ! -name "."`; do
 			 			name=`basename ${file}`
 						echo `pwd`/"${name}"
 			   	done

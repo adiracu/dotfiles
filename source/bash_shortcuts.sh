@@ -44,8 +44,6 @@ extension() { echo ${1##*.} ; }
 size() { du -c -h $1 | grep total ; }
 
 
-
-
 # GIT/SVN
 alias countgitcommits='git log --pretty=format:'' | wc -l'
 gitcommit()  { git commit -a -m "$1" ; }
