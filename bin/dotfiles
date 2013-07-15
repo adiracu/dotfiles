@@ -205,14 +205,18 @@ if [[ ! -d ~/.dotfiles ]]; then
     e_header "Downloading dotfiles via ssh"
     git clone --recursive git@github.com:rackenstein/dotfiles.git ~/.dotfiles
   fi
-
-
 else
 # Or update otherwise
   e_header "Updating dotfiles"
 
   git pull
   git submodule update --init --recursive --quiet
+fi
+
+# If we still don't have the folder created, bail out
+if [[ ! -d ~/.dotfiles ]]; then
+  e_error "Couldn't download the repository"
+  exit 1
 fi
 
 # Go to the main folder
