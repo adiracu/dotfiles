@@ -94,10 +94,14 @@ function do_stuff() {
   local base dest skip
   local searchPath="${HOME}/.dotfiles/$1"
 
+  # Run _header function only if declared.
+  [[ $(declare -f "$1_header") ]] && "$1_header"
+
   if test ! -d ${searchPath}; then
     e_error "${searchPath} does not exist"
     return;
   fi
+
 
   # All files that are in search path. (dotfiles or not)
   allImmediateFiles=`find ${searchPath} -maxdepth 1 -type f`
@@ -112,9 +116,6 @@ ${allLabelDotfiles}"
 
   # No files? abort.
   if [[ ! $allFiles ]]; then return; fi
-
-  # Run _header function only if declared.
-  [[ $(declare -f "$1_header") ]] && "$1_header"
 
   # Iterate over files.
   OLD_IFS="${IFS}"
