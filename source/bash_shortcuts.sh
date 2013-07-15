@@ -2,7 +2,7 @@ NOT_YET_DONE="Not overwritten by OS specific function"
 # Typos / Shortcuts
 
 alias ll='ls -l'
-alias ls='ls --color=auto'
+
 
 alias grep='grep --color=auto'
 alias grpe='grep'

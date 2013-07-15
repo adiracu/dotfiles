@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Forked from Ben Alman's dotfiles : https://github.com/cowboy/dotfiles
 echo 'Dotfiles'
 
 if [[ "$1" == "-h" || "$1" == "--help" ]]; then cat <<HELP

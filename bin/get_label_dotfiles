@@ -1,3 +1,4 @@
+#!/bin/bash
 
 # returns the relevant dotfiles for the currently set labels from a path
 # e.g. label_dotfiles ~/.dotfiles/init
