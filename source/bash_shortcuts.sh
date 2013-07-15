@@ -14,6 +14,18 @@ alias jobs='jobs -l'
 # overwritten by osx
 alias psef='ps -eF'
 
+# man
+manjump () {    # Bash
+    local pages string
+    if test $# -ne 2; then
+    	echo "Usage:  manjump  word_to_search_for  page_name"
+    	return;
+    fi
+    pages=(${@:2})
+    string="$1"
+
+    man -P "less -p \"$string\" " ${pages[@]}
+}
 
 psefgrep()
 {
