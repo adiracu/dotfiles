@@ -3,6 +3,8 @@ NOT_YET_DONE="Not overwritten by OS specific function"
 
 alias ll='ls -l'
 
+# OSX doesnt have this..
+alias ls='ls --color=auto'
 
 alias grep='grep --color=auto'
 alias grpe='grep'

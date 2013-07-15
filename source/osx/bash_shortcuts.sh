@@ -2,6 +2,8 @@
 # os x doesn't have -F
 alias psef='ps -ef'
 
+alias ls='ls -G'
+
 alias killmouseacc='defaults write .GlobalPreferences com.apple.mouse.scaling -1'
 
 
