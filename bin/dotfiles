@@ -56,7 +56,7 @@ function skip() {
 }
 
 # Initialization scripts
-function copy_header() { e_header "Running initialization scripts"; }
+function init_header() { e_header "Running initialization scripts"; }
 
 function init_do() {
   e_success "Initializing ${2#$HOME/.dotfiles/}"
