@@ -1,9 +1,11 @@
 Inspired/Copied from https://raw.github.com/cowboy/dotfiles/
 
-= Installation
+# Installation
 
 
-= Refresher
+`curl --silent https://raw.github.com/rackenstein/dotfiles/master/bin/dotfiles | sh`
+
+# Refresher
 
 running ~/.dotfiles/bin/dotfiles will do:
 
@@ -28,7 +30,7 @@ Others:
 2. Files in `conf` just sit there. If a config file doesn't need to go to `~/`, put it there.
 3. Files in `bin` are executable shell scripts
 
-= Labels
+# Labels
 
 In order to handle multiple os variations and work environments (work, home), labels are used. For example, a label can be an OS (`osx`, `arch`) or a work environment (`work`, `server`).
 
