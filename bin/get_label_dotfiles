@@ -3,8 +3,7 @@
 # returns the relevant dotfiles for the currently set labels from a path
 # e.g. label_dotfiles ~/.dotfiles/init
 #   if the currently set label is osx
-#    it will return all the files found in ~/.dotfiles/init/osx
-#    Folders are ignored
+#    it will return all the files and folders found in ~/.dotfiles/init/osx
 
 if test $# -ne 1; then
 	echo "Need a path to search in." 1>&2
