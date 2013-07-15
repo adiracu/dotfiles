@@ -197,8 +197,16 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 if [[ ! -d ~/.dotfiles ]]; then
   new_dotfiles_install=1
   # ~/.dotfiles doesn't exist? Clone it!
-  e_header "Downloading dotfiles"
-  git clone --recursive git@github.com:rackenstein/dotfiles.git ~/.dotfiles
+
+  if [[ ! "$(type -p ssh)" ]]; then
+    e_header "Downloading dotfiles via https"
+    git clone --recursive https://github.com/rackenstein/dotfiles.git ~/.dotfiles
+  else
+    e_header "Downloading dotfiles via ssh"
+    git clone --recursive git@github.com:rackenstein/dotfiles.git ~/.dotfiles
+  fi
+
+
 else
 # Or update otherwise
   e_header "Updating dotfiles"
