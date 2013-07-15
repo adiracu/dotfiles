@@ -1,5 +1,10 @@
 
 
+opensublime ()
+{
+    /usr/local/sublime-text-2/sublime_text "$@"
+}
+
 
 # mount an smb share
 mountsmbfromto() { sudo /bin/mount -t cifs -o username=aracu,domain=ad-01.ent-01.adgroup $1 $2 ; }
