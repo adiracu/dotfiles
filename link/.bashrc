@@ -1,3 +1,4 @@
+#!/bin/bash
 # Add binaries to the path
 PATH=~/.dotfiles/bin:$PATH
 export PATH
@@ -6,7 +7,7 @@ export PATH
 function src() {
    # echo "Sourcing"
   local file
-  if [[ "$1" ]]; then
+  if test -f "$1" ; then
     source "$HOME/.dotfiles/source/$1.sh"
   else
   	 # Source all the files in source
