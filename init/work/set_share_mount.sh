@@ -18,7 +18,7 @@ COLOR_OFF="\033[0m"
 
 IFS=$'\n'
 
-first_time_writing=
+first_time_writing=1
 username=
 password=
 
@@ -41,7 +41,7 @@ for serverSharePointTuple in $shareNames; do
 	else
 
 		# Does not contain the IP - Host combination
-		if [[ ! "${first_time_writing}" ]]; then
+		if [[  "${first_time_writing}" ]]; then
 			time=`date`
 
 			echo "Adding server ${server} to mountpoint ${mountPoint}. Credentials are needed (these will be stored in plaintext)."
@@ -64,7 +64,7 @@ for serverSharePointTuple in $shareNames; do
 
 			sudo -- sh -c  "echo -e '\n\n# Added by dotfiles on ${time}\n' >> /etc/fstab"
 
-			first_time_writing=1
+			first_time_writing=
 		fi
 
 		sudo -- sh -c  "echo '${server} ${mountPoint} cifs uid=1000,gid=100,username=$username,password=$password,domain=ad-01.ent-01.adgroup' >> /etc/fstab"
