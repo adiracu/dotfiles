@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Goes and executes the install_all.sh scripts found in the detected labels
+
+for label in `cat ~/.dotfiles/conf/labels_detected` ; do
+
+	if test -d "${label}"; then
+
+		pushd "${label}" &>/dev/null
+
+			if test -f "install_all"; then
+				/bin/bash install_all
+	 		fi
+
+   	popd &>/dev/null
+
+	fi
+done
+
