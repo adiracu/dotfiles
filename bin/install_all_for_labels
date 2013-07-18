@@ -104,10 +104,19 @@ if ! ping -W 1 -c 1 www.google.com &>/dev/null ; then
 	fi
 fi
 
+
+# Are there any labels detected?
+if ! test -f $HOME/.dotfiles/conf/labels_detected; then
+	e_error "No conf/labels_detected found. Exitting (1)"
+	exit 1
+fi
+
 IFS=$'\n'
 for label in `cat $HOME/.dotfiles/conf/labels_detected` ; do
+
 	e_header "Installing packages for label $label"
 
+	# Is there a package manager defined?
 	if ! test -f $HOME/.dotfiles/conf/$label/package_manager; then
 		e_error "No package manager file found at conf/$label/package_manager. Skipping label."
 		continue
@@ -115,6 +124,7 @@ for label in `cat $HOME/.dotfiles/conf/labels_detected` ; do
 
 	PACKAGE_MANAGER=`cat $HOME/.dotfiles/conf/$label/package_manager`
 
+	# Are there packages that should be installed defined?
 	if ! test -f $HOME/.dotfiles/conf/$label/packages; then
 		e_error "No list of packages file found at conf/$label/packages. Skipping label."
 		continue
@@ -140,7 +150,7 @@ for label in `cat $HOME/.dotfiles/conf/labels_detected` ; do
 		continue
 	fi
 
-	SKIP_ALL_FOR_LABEL=
+	SKIP_ALL_FOR_g=
 	# Install all missing packages
 	while IFS=$':' read -r cmdToTest packageToInstall ; do
 
