@@ -94,14 +94,13 @@ function isCommandPresent()
 # MAIN SCRIPT LOGIC
 
 
-# CHECK INTERNET CONNECTION FIRST
-
+# Check Internet Connection
 # Try to ping 1 packet,
 # Timeout 1 second
 if ! ping -W 1 -c 1 www.google.com &>/dev/null ; then
 	if ! ping -W 1 -c1 www.yahoo.com &>/dev/null ; then
 		e_error "There is no internet connection (or both Google and Yahoo are down). Abandoning installation of packages."
-		# exit 1
+		exit 1
 	fi
 fi
 
