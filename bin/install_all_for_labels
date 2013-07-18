@@ -172,6 +172,8 @@ for label in `cat $HOME/.dotfiles/conf/labels_detected` ; do
 					SKIP_ALL_FOR_LABEL=1
 					break
 			esac
+		else
+			e_success "$cmdToTest is already installed. Skipping."
 		fi
 	done <<< "$PACKAGES"
 
