@@ -76,7 +76,7 @@ function installPackageManager-brew()
 function installPackageWith-brew()
 {
 	e_success "Installing package ${COLOR_GREEN}$1${COLOR_OFF}"
-	echo brew install "$1"
+	brew install "$1"
 }
 
 function installPackageWith-pacman()
@@ -159,7 +159,6 @@ for label in `cat $HOME/.dotfiles/conf/labels_detected` ; do
 			SHOULD_INSTALL_RESPONSE=d
 			askForConfirmation "$cmdToTest" "$packageToInstall" </dev/tty
 
-			echo $SHOULD_INSTALL_RESPONSE
 			case $SHOULD_INSTALL_RESPONSE in
 				y)
 					installPackageWith-$PACKAGE_MANAGER "$packageToInstall" ;;
