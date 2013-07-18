@@ -48,9 +48,9 @@ for serverSharePointTuple in $shareNames; do
 			echo -e "${COLOR_BOLD_RED}(c)${COLOR_PLAIN_RED}ontinue or ${COLOR_BOLD_RED}(a)${COLOR_PLAIN_RED}bort (10 second timeout)? ${COLOR_OFF}"
 			# -r     : don't allow backslashes
 			# -s     : don't echo key presses back to the terminal
-			# -N 1   : only allow 1 character
+			# -n 1   : only allow 1 character
 			# -t 10  : timeout of 10 seconds
-			read -r -s -N 1 -t 10 response
+			read -r -s -n 1 -t 10 response
 
 			if test ${response} = "c" ; then
 				echo -n "Windows username: "
