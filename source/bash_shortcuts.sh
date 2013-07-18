@@ -59,7 +59,7 @@ alias countgitcommits='git log --pretty=format:'' | wc -l'
 
 alias gstat='git status'
 gcomm() { git commit -m "$1" ; }
-gcommall() { git commit -a -m "$1" ; } }
+gcommall() { git commit -a -m "$1" ; }
 gadd() { git add "$@" ; }
 
 svnreposize() { svn list -vR $1 | awk '{tmp=match($3,/[0-9]/);if(tmp){sum+=$3; i++}} END {print "\ntotal size= " sum/1024000" MB" "\nnumber of files= " i/1000 " K"}' ;  }
