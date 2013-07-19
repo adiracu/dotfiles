@@ -173,7 +173,7 @@ for label in `cat $HOME/.dotfiles/conf/labels_detected` ; do
 					break
 			esac
 		else
-			e_success "$cmdToTest is already installed. Skipping."
+			e_success "$cmdToTest is already installed. Skipping. "
 		fi
 	done <<< "$PACKAGES"
 
