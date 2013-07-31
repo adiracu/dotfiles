@@ -40,10 +40,10 @@ fi
 
 
 # Kinda appears like a really light gray
-COLOR_EMPH="\033[2m"
-COLOR_LIGHT_GRAY="\033[0;37m"
-COLOR_RED="\033[0;41m"
-COLOR_OFF="\033[0m"
+COLOR_EMPH="\[\033[2m\]"
+COLOR_LIGHT_GRAY="\[\033[0;37m\]"
+COLOR_RED="\[\033[0;41m\]"
+COLOR_OFF="\[\033[0m\]"
 
 COLOR_EVERYTHING=${COLOR_OFF}
 COLOR_HOSTNAME=${COLOR_OFF}
