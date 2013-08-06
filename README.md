@@ -17,6 +17,7 @@ running ~/.dotfiles/bin/dotfiles will do:
 6. Files in `link` are linked into `~/`
 
 N.B. Files overwritten by `copy` and `link` are saved into the `backups` directory
+N.B.2 Files with their exact filename found in conf/dotfiles_ignore will be skipped
 
 
 Also, the current setup (.bashrc) will :
