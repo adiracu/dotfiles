@@ -8,10 +8,12 @@ Usage: $(basename "$0") [--extension]
 
 --extension : the extension filenames should have. Default is 'sh'
 
-What it does:
+It sources all files ending in the specified extension:
 
-  1. It sources all files ending in the specified extension found in the top level directory of 'source/'
-  2. It sources all label files ending in the specified extension, as returned by 'bin/get_label_dotfiles'
+  1. Files found in the top level directory of 'source/'
+  2. Label files found in 'source/label', as returned by 'bin/get_label_dotfiles'
+
+N.B. This script should itself be sourced, otherwise it serves little purpose..
 HELP
 exit; fi
 
@@ -30,7 +32,7 @@ function src() {
   else
   	 # Source all the files in source
     for file in `find ~/.dotfiles/source -maxdepth 1 -type f -name "*.$EXTENSION"`; do
-      echo source "$file"
+      source "$file"
     done
 
     # Now source all the files in each label
@@ -40,7 +42,7 @@ function src() {
     for file in `$HOME/.dotfiles/bin/get_label_dotfiles ~/.dotfiles/source` ; do
       if test -f "${file}"; then
         if test ${file##*.} = "$EXTENSION" ; then
-    	   echo source $file
+    	   source $file
         fi
       fi
     done

@@ -3,36 +3,13 @@
 PATH=~/.dotfiles/bin:$PATH
 export PATH
 
-# Source all files in ~/.dotfiles/source/
-function src() {
-   # echo "Sourcing"
-  local file
-  if test -f "$1" ; then
-    source "$HOME/.dotfiles/source/$1.sh"
-  else
-  	 # Source all the files in source
-    for file in `find ~/.dotfiles/source -maxdepth 1 -type f`; do
-      source "$file"
-    done
-
-    # Now source all the files in each label
-   local OLD_IFS="$IFS"
-   IFS=$'\n'
-
-    for file in `get_label_dotfiles ~/.dotfiles/source` ; do
-      if test -f "${file}"; then
-    	 source $file
-      fi
-    done
-
-    IFS="$OLD_IFS"
-  fi
+function src_bash() {
+  source source_dotfiles --extension sh
 }
-
 
 # Run dotfiles script, then source.
 function dotfiles() {
-  ~/.dotfiles/bin/dotfiles "$@" && src
+  ~/.dotfiles/bin/dotfiles "$@" && src_bash
 }
 
-src
+src_bash
