@@ -27,12 +27,12 @@ function src() {
 
   local file
   if test -f "$1" ; then
-    source "$HOME/.dotfiles/source/$1.sh"
+    source "$1"
 
   else
   	 # Source all the files in source
     for file in `find ~/.dotfiles/source -maxdepth 1 -type f -name "*.$EXTENSION"`; do
-      source "$file"
+		source "$file"
     done
 
     # Now source all the files in each label
