@@ -55,6 +55,20 @@ function skip() {
   fi
 }
 
+# Should the file be skipped because of its name?
+# The exit code of the last function will be either 0 (should skip) or non-0 (shouldn't skip)
+function skipFileNamed() {
+  name=$1
+
+  if grep --fixed-strings --line-regexp --quiet ${name} $HOME/.dotfiles/conf/dotfiles_ignore
+  then
+    e_arrow "Skipping file named ${name} due to 'conf/dotfiles_ignore' list"
+    true
+  else
+    false
+  fi
+}
+
 # Initialization scripts
 function init_header() { e_header "Running initialization scripts"; }
 
@@ -148,7 +162,12 @@ ${allLabelDotfiles}"
     fi
 
     # Do stuff.
-    "$1_do" "$base" "$file"
+    if ! skipFileNamed $base ; then
+      "$1_do" "$base" "$file"
+    fi
+
+
+
   done
 
   IFS="${OLD_IFS}"
