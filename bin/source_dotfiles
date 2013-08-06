@@ -1,0 +1,52 @@
+#!/bin/bash
+
+# Check for given arguments
+
+if [[ "$1" == "-h" || "$1" == "--help" ]]; then cat <<HELP
+
+Usage: $(basename "$0") [--extension]
+
+--extension : the extension filenames should have. Default is 'sh'
+
+What it does:
+
+  1. It sources all files ending in the specified extension found in the top level directory of 'source/'
+  2. It sources all label files ending in the specified extension, as returned by 'bin/get_label_dotfiles'
+HELP
+exit; fi
+
+EXTENSION="sh"
+if [[ "$1" == "--extension" ]]; then
+	EXTENSION=${2}
+fi
+
+# Source all .EXTENSION files in ~/.dotfiles/source/
+function src() {
+
+  local file
+  if test -f "$1" ; then
+    source "$HOME/.dotfiles/source/$1.sh"
+
+  else
+  	 # Source all the files in source
+    for file in `find ~/.dotfiles/source -maxdepth 1 -type f -name "*.$EXTENSION"`; do
+      echo source "$file"
+    done
+
+    # Now source all the files in each label
+   local OLD_IFS="$IFS"
+   IFS=$'\n'
+
+    for file in `$HOME/.dotfiles/bin/get_label_dotfiles ~/.dotfiles/source` ; do
+      if test -f "${file}"; then
+        if test ${file##*.} = "$EXTENSION" ; then
+    	   echo source $file
+        fi
+      fi
+    done
+
+    IFS="$OLD_IFS"
+  fi
+}
+
+src
