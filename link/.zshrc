@@ -23,6 +23,7 @@ source $HOME/.dotfiles/submodules/antigen/antigen.zsh
 # 			- list installed plugins
 # antigen theme
 #			- switch the prompt theme to some used from the default repo url
+# 			- basically lookes in the /themes part of the oh-my-zsh repo
 # 			- can have the same <url> <loc> as bundle
 #
 # antigen apply
@@ -52,8 +53,6 @@ antigen bundle zsh-users/zsh-syntax-highlighting
 # Tell antigen that you're done.
 antigen apply
 
-
-
 # Source all .zsh files in ~/.dotfiles/source
 # Add binaries to the path
 PATH=~/.dotfiles/bin:$PATH
@@ -69,5 +68,4 @@ function dotfiles() {
 }
 
 src_zsh
-
 
