@@ -19,3 +19,10 @@ sopcastToVlc ()
     /Applications/SopCast.app/Contents/Resources/binaries/m32/sp-sc-auth $1 $2 8902 > /dev/null
 }
 
+postnotification ()
+{
+
+	terminal-notifier -message "${1}" -title "${2}"
+}
+
+

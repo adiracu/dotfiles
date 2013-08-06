@@ -38,6 +38,9 @@ fi
 # APP SHORTCUTS
 opensublime () { echo -n "$NOT_YET_DONE" ; }
 
+    # TWO ARGUMENTS; message and title
+postnotification () { echo -n "$NOT_YET_DONE" ; }
+
 # Calculator
 calc() { echo "scale=4;$1" | bc ; }
 
@@ -71,3 +74,31 @@ sshnopub() { ssh -o PubkeyAuthentication=no $1 ; }
 # useful little ones
 sha1oftext() { echo -n $1 | sha1sum | awk '{print toupper($1)}' ; }
 md5oftext()  { echo -n $1 | md5sum  | awk '{print toupper($1)}' ; }
+
+
+function countdown
+{
+        local OLD_IFS="${IFS}"
+        IFS=":"
+        local ARR=( $1 )
+        local SECONDS=$((  (ARR[0] * 60 * 60) + (ARR[1] * 60) + ARR[2]  ))
+        local START=$(date +%s)
+        local END=$((START + SECONDS))
+        local CUR=$START
+
+        while [[ $CUR -lt $END ]]
+        do
+                CUR=$(date +%s)
+                LEFT=$((END-CUR))
+
+                printf "\r%02d:%02d:%02d" \
+                        $((LEFT/3600)) $(( (LEFT/60)%60)) $((LEFT%60))
+
+                sleep 1
+        done
+        IFS="${OLD_IFS}"
+        echo "        "
+        postnotification "Timer $1 finished." "Timer Finished"
+}
+
+
