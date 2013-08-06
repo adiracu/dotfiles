@@ -17,10 +17,11 @@ running ~/.dotfiles/bin/dotfiles will do:
 6. Files in `link` are linked into `~/`
 
 N.B. Files overwritten by `copy` and `link` are saved into the `backups` directory
-N.B.2 Files with their exact filename found in conf/dotfiles_ignore will be skipped
+
+N.B.2 Files with the exact filename found in `conf/dotfiles_ignore` will be skipped
 
 
-Also, the current setup (.bashrc) will :
+Also, the current setup (.bashrc | .zshrc) will :
 
 * source files in `source` in alphanumeric order.
 * source files in `source/valid_label` (see Labels below)
@@ -49,9 +50,12 @@ Detection rules have the following format:
 For example, in order to detect if the current computer is running OS X, it's is sufficient to check if `uname` contains the word `Darwin`. So the rules is:
  	`osx:uname:Darwin`
 
-Each of the `init`, `copy` and `link` folders can contain label specific files, under a directory named with the appropriate `label name`.
+Each of the `init`, `copy`, `conf` and `link` folders can contain label specific files, under a directory named with the appropriate `label name`.
 
 To be more precise, the `dotfiles` script passes to de `init`, `copy` and `link` functions:
+
 	1. all files found in the respective folder(e.g. /init) at depth 1, regardles of their  name
+
 	2. all dot folders found in the respective folder at depth 1; their name has to start with "."
+
 	3. all the files and folders found in the respective label folders
