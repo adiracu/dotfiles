@@ -54,6 +54,15 @@ Each of the `init`, `copy`, `conf` and `link` folders can contain label specific
 
 To be more precise, the `dotfiles` script passes to de `init`, `copy` and `link` functions:
 
-	1. all files found in the respective folder(e.g. /init) at depth 1, regardles of their  name
+	1. all files found in the respective folder(e.g. /init) at depth 1, regardless of their name
 	2. all dot folders found in the respective folder at depth 1; their name has to start with "."
 	3. all the files and folders found in the respective label folders
+
+# Automatically install packages
+
+The script `bin/install_all_for_labels` will check if a command exists. If it doesn't exist, it will try to install it using the appropriate package manager. It uses:
+
+	1. the package manager specified in `conf/detected_label/package_manager`
+	2. the rules specified in `conf/detected_label/packages` specified in the form `cmd_to_test:package_to_install_if_cmd_missing`
+	3. if the package manager does not exists, it will try to install it (only for `brew` atm)
+
