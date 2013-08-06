@@ -55,7 +55,5 @@ Each of the `init`, `copy`, `conf` and `link` folders can contain label specific
 To be more precise, the `dotfiles` script passes to de `init`, `copy` and `link` functions:
 
 	1. all files found in the respective folder(e.g. /init) at depth 1, regardles of their  name
-
 	2. all dot folders found in the respective folder at depth 1; their name has to start with "."
-
 	3. all the files and folders found in the respective label folders
