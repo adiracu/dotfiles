@@ -36,17 +36,19 @@ function put_spacing() {
   echo $spacing
 }
 
+# Not using RPROMPT because I want the git prompt info on the same line as the other bits
+#   RPROMPT would have put it on the line with the cmd
+# Also, in precmd we can check the ssh session
 function precmd() {
 
-# if test -n "${SSH_TTY}" -o -n "$SSH_CLIENT" ; then
-# print -rP '
-# $fg[cyan]%n@$bg[red]$fg[white]%m%{$reset_color%}$fg[cyan]: $fg[yellow]$(get_pwd)$(put_spacing)$(git_prompt_info)'
-# else
-
+if test -n "${SSH_TTY}" -o -n "$SSH_CLIENT" ; then
+print -rP '
+$fg[cyan]%n@$bg[red]$fg[white]%m%{$reset_color%}$fg[cyan]: $fg[yellow]$(get_pwd)$(put_spacing)$(git_prompt_info)'
+else
 	print -rP '
 $fg[cyan]%n@%m: $fg[yellow]$(get_pwd)$(put_spacing)$(git_prompt_info)'
 
-# fi
+fi
 
 }
 
