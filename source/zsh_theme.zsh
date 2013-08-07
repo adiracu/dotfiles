@@ -23,6 +23,8 @@ function git_prompt_info() {
 	     __CURRENT_GIT_BRANCH="${arr[1][(w)4]}";
 	 	fi
 
+		__CURRENT_GIT_BRANCH_STATUS=
+		__CURRENT_GIT_BRANCH_NO_COMMITS=
 	 	if [[ $arr[2] =~ 'Your branch is' ]]; then
 	     	if [[ $arr[2] =~ 'ahead' ]]; then
 	         __CURRENT_GIT_BRANCH_STATUS="↑"
