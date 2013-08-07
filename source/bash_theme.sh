@@ -21,7 +21,7 @@ fi
 
 
 if test $# -ge "1"; then
-	if test $1 == "--help" ; then
+	if test $1 == "--help"  -o $1 == "-h" ; then
 		echo "Valid options are [--theme={reset | ssh | none}]"
 		echo "      : reset   - assumes a black blackground; everything is emphasized "
 		echo "      : ssh     - color the in background red"
@@ -29,7 +29,7 @@ if test $# -ge "1"; then
 		echo "      : none    - no coloring"
 		echo ""
 		echo "The default theme used is:"
-		echo "      - if \$SSH_TTY is set, 'ssh'"
+		echo "      - if \$SSH_TTY or \$SSH_CLIENT is set, 'ssh'"
 		echo "      - otherwise, 'reset'"
 	elif test $1 == "--theme=reset" -o $1 == "--theme=ssh" -o $1 == "--theme=none"; then
 		THEME_TO_USE=$1
