@@ -1,10 +1,61 @@
 # ZSH Theme based on doubleend
 
 # Function Declaration
+ZSH_THEME_GIT_PROMPT_PREFIX="["
+ZSH_THEME_GIT_PROMPT_SUFFIX="]$reset_color"
+ZSH_THEME_GIT_PROMPT_DIRTY="$fg[red]+"
+ZSH_THEME_GIT_PROMPT_CLEAN="$fg[green]"
 
 function git_prompt_info() {
-  ref=$(git symbolic-ref HEAD 2> /dev/null) || return
-  echo "$(parse_git_dirty)$ZSH_THEME_GIT_PROMPT_PREFIX$(current_branch)$ZSH_THEME_GIT_PROMPT_SUFFIX"
+  	# ref=$(git symbolic-ref HEAD 2> /dev/null) || return
+  	# echo "$(parse_git_dirty)$ZSH_THEME_GIT_PROMPT_PREFIX$(current_branch)$ZSH_THEME_GIT_PROMPT_SUFFIX"
+
+  	result=""
+
+	local st="$(git status 2>/dev/null)"
+	if [[ -n "$st" ]]; then
+		local -a arr
+	 	arr=(${(f)st})
+
+		if [[ $arr[1] =~ 'Not currently on any branch.' ]]; then
+	     __CURRENT_GIT_BRANCH='no-branch'
+	 	else
+	     __CURRENT_GIT_BRANCH="${arr[1][(w)4]}";
+	 	fi
+
+	 	if [[ $arr[2] =~ 'Your branch is' ]]; then
+	     	if [[ $arr[2] =~ 'ahead' ]]; then
+	         __CURRENT_GIT_BRANCH_STATUS="↑"
+	         __CURRENT_GIT_BRANCH_NO_COMMITS="${arr[2]//[^0-9]/}"
+	     	elif [[ $arr[2] =~ 'diverged' ]]; then
+	         __CURRENT_GIT_BRANCH_STATUS="↕"
+	         __CURRENT_GIT_BRANCH_NO_COMMITS="${arr[2]//[^0-9]/}"
+	     	else
+	         __CURRENT_GIT_BRANCH_STATUS="↓"
+	         __CURRENT_GIT_BRANCH_NO_COMMITS="${arr[2]//[^0-9]/}"
+	     	fi
+	 	fi
+
+	 	if [[ ! $st =~ 'nothing to commit' ]]; then
+	     __CURRENT_GIT_BRANCH_IS_DIRTY='1'
+	   else
+	    	__CURRENT_GIT_BRANCH_IS_DIRTY=
+	 	fi
+
+	 	if test -n __CURRENT_GIT_BRANCH_IS_DIRTY; then
+	 		result+=$ZSH_THEME_GIT_PROMPT_DIRTY
+	 	else
+	 		result+=$ZSH_THEME_GIT_PROMPT_CLEAN
+	 	fi
+
+		result+=$ZSH_THEME_GIT_PROMPT_PREFIX
+		result+=$__CURRENT_GIT_BRANCH
+		result+=$__CURRENT_GIT_BRANCH_STATUS
+		result+=$__CURRENT_GIT_BRANCH_NO_COMMITS
+		result+=$ZSH_THEME_GIT_PROMPT_SUFFIX
+	fi
+
+	echo "$result"
 }
 
 function get_pwd() {
@@ -28,7 +79,6 @@ function put_spacing() {
    # 3 for the @,: and <space>
   (( termwidth = ${COLUMNS} - 3 - ${lenUser} - ${lenHost} - ${lenPwd} - ${git} ))
 
-  # echo "LEN PWD IS $lenPwd"
   local spacing=""
   for i in {1..$termwidth}; do
     spacing="${spacing} "
@@ -41,25 +91,17 @@ function put_spacing() {
 # Also, in precmd we can check the ssh session
 function precmd() {
 
-if test -n "${SSH_TTY}" -o -n "$SSH_CLIENT" ; then
-print -rP '
+	if test -n "${SSH_TTY}" -o -n "$SSH_CLIENT" ; then
+		print -rP '
 $fg[cyan]%n@$bg[red]$fg[white]%m%{$reset_color%}$fg[cyan]: $fg[yellow]$(get_pwd)$(put_spacing)$(git_prompt_info)'
-else
-	print -rP '
+	else
+		print -rP '
 $fg[cyan]%n@%m: $fg[yellow]$(get_pwd)$(put_spacing)$(git_prompt_info)'
 
-fi
-
+	fi
 }
-
 
 # Customising the prompt
 
 PROMPT='%{$reset_color%}→ '
-# RPROMPT='%T'
 
-
-ZSH_THEME_GIT_PROMPT_PREFIX="[git:"
-ZSH_THEME_GIT_PROMPT_SUFFIX="]$reset_color"
-ZSH_THEME_GIT_PROMPT_DIRTY="$fg[red]+"
-ZSH_THEME_GIT_PROMPT_CLEAN="$fg[green]"
