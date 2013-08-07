@@ -1,19 +1,6 @@
-# ZSH Theme - Preview: http://gyazo.com/8becc8a7ed5ab54a0262a470555c3eed.png
-# local return_code="%(?..%{$fg[red]%}%? ↵%{$reset_color%})"
+# ZSH Theme based on doubleend
 
-# local user_host='%{$terminfo[normal]$fg[green]%}%n@%m%{$reset_color%}'
-
-# local current_dir='%{$terminfo[bold]$fg[blue]%} %~%{$reset_color%}'
-
-
-# local git_branch='$(git_prompt_info)%{$reset_color%}'
-
-# PROMPT="╭─${user_host} ${current_dir} ${git_branch}
-# ╰─ %B$%b "
-# RPS1="${return_code}"
-
-# ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[yellow]%}‹"
-# ZSH_THEME_GIT_PROMPT_SUFFIX="› %{$reset_color%}"
+# Function Declaration
 
 function git_prompt_info() {
   ref=$(git symbolic-ref HEAD 2> /dev/null) || return
@@ -21,36 +8,27 @@ function git_prompt_info() {
 }
 
 function get_pwd() {
-  print -D $PWD
-}
-
-function battery_charge() {
-  if [ -e ~/bin/batcharge.py ]
-  then
-    echo `python ~/bin/batcharge.py`
-  else
-    echo ''
-  fi
+  basename `print -D $PWD`
 }
 
 function put_spacing() {
   local git=$(git_prompt_info)
   if [ ${#git} != 0 ]; then
+  	# the 10 is for the colour codes that are also taken into consideration
     ((git=${#git} - 10))
   else
     git=0
   fi
 
-  local bat=$(battery_charge)
-  if [ ${#bat} != 0 ]; then
-    ((bat = ${#bat} - 18))
-  else
-    bat=0
-  fi
-
   local termwidth
-  (( termwidth = ${COLUMNS} - 3 - ${#HOST} - ${#$(get_pwd)} - ${bat} - ${git} ))
+  # HOST%%.* - the host name up to the first . ; see %m in the PROMPT
+  local lenHost="${#HOST%%.*}"
+  local lenUser="${#USERNAME}"
+  local lenPwd="${#$(get_pwd)}"
+   # 3 for the @,: and <space>
+  (( termwidth = ${COLUMNS} - 3 - ${lenUser} - ${lenHost} - ${lenPwd} - ${git} ))
 
+  # echo "LEN PWD IS $lenPwd"
   local spacing=""
   for i in {1..$termwidth}; do
     spacing="${spacing} "
@@ -59,11 +37,25 @@ function put_spacing() {
 }
 
 function precmd() {
-print -rP '
-$fg[cyan]%m: $fg[yellow]$(get_pwd)$(put_spacing)$(git_prompt_info) $(battery_charge)'
+
+# if test -n "${SSH_TTY}" -o -n "$SSH_CLIENT" ; then
+# print -rP '
+# $fg[cyan]%n@$bg[red]$fg[white]%m%{$reset_color%}$fg[cyan]: $fg[yellow]$(get_pwd)$(put_spacing)$(git_prompt_info)'
+# else
+
+	print -rP '
+$fg[cyan]%n@%m: $fg[yellow]$(get_pwd)$(put_spacing)$(git_prompt_info)'
+
+# fi
+
 }
 
+
+# Customising the prompt
+
 PROMPT='%{$reset_color%}→ '
+# RPROMPT='%T'
+
 
 ZSH_THEME_GIT_PROMPT_PREFIX="[git:"
 ZSH_THEME_GIT_PROMPT_SUFFIX="]$reset_color"
