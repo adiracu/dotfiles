@@ -85,6 +85,12 @@ function installPackageWith-pacman()
 	echo pacman -Sy "$1"
 }
 
+function installPackageWith-yum()
+{
+	e_success "Installing package ${COLOR_GREEN}$1${COLOR_OFF}"
+	yum --assumeyes install "$1"
+}
+
 function isCommandPresent()
 {
 	command -v $1 &>/dev/null
@@ -100,7 +106,7 @@ function isCommandPresent()
 if ! ping -W 1 -c 1 www.google.com &>/dev/null ; then
 	if ! ping -W 1 -c1 www.yahoo.com &>/dev/null ; then
 		e_error "There is no internet connection (or both Google and Yahoo are down). Abandoning installation of packages."
-		exit 1
+		#exit 1
 	fi
 fi
 
@@ -123,6 +129,11 @@ for label in `cat $HOME/.dotfiles/conf/labels_detected` ; do
 	fi
 
 	PACKAGE_MANAGER=`cat $HOME/.dotfiles/conf/$label/package_manager`
+
+	if !  declare -f installPackageWith-$PACKAGE_MANAGER ; then
+		e_error "No function defined for installing with $PACKAGE_MANAGER"
+		continue
+	fi
 
 	# Are there packages that should be installed defined?
 	if ! test -f $HOME/.dotfiles/conf/$label/packages; then
@@ -160,11 +171,10 @@ for label in `cat $HOME/.dotfiles/conf/labels_detected` ; do
 			askForConfirmation "$cmdToTest" "$packageToInstall" </dev/tty
 
 			case $SHOULD_INSTALL_RESPONSE in
+				a)
+					ASSUME_YES=1 ;&				
 				y)
 					installPackageWith-$PACKAGE_MANAGER "$packageToInstall" ;;
-				a)
-					installPackageWith-$PACKAGE_MANAGER "$packageToInstall"
-					ASSUME_YES=1 ;;
 				n)
 					e_error "Skipping $packageToInstall" ;;
 				s)
