@@ -15,7 +15,7 @@
 # Assign a default value
 THEME_TO_USE="--theme=reset"
 
-if test "${SSH_TTY}"; then
+if test -n "${SSH_TTY}" -o -n "$SSH_CLIENT" ; then
 	THEME_TO_USE="--theme=ssh"
 fi
 
