@@ -42,11 +42,11 @@ function git_prompt_info() {
 	     __CURRENT_GIT_BRANCH_IS_DIRTY='1'
 	     echo "DIRTY"
 	   else
-	    	__CURRENT_GIT_BRANCH_IS_DIRTY=
+	    	__CURRENT_GIT_BRANCH_IS_DIRTY='0'
 	    	echo "CLEAN"
 	 	fi
 
-	 	if [[ ! ${__CURRENT_GIT_BRANCH_IS_DIRTY} ]] ; then
+	 	if test ${__CURRENT_GIT_BRANCH_IS_DIRTY} == '1' ; then
 	 		result+=$ZSH_THEME_GIT_PROMPT_DIRTY
 	 		echo "DIRTY"
 	 	else
