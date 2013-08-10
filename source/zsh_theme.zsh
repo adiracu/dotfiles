@@ -1,10 +1,15 @@
-# ZSH Theme based on doubleend
+# [user@host curr_folder] $  .......  <:(> <git status> HH:MM
+#  <:(> appears if the last exit code was non zero
+#  <git status> appears if the current dir is in a git repo
+#  host appears in red if this is a ssh session
+
 
 # Function Declaration
+
 ZSH_THEME_GIT_PROMPT_PREFIX="["
-ZSH_THEME_GIT_PROMPT_SUFFIX="]$reset_color"
-ZSH_THEME_GIT_PROMPT_DIRTY="$fg[red]+"
-ZSH_THEME_GIT_PROMPT_CLEAN="$fg[green]"
+ZSH_THEME_GIT_PROMPT_SUFFIX="]%{$reset_color%}"
+ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[red]%}+"
+ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[green]%}"
 
 function git_prompt_info() {
   	# ref=$(git symbolic-ref HEAD 2> /dev/null) || return
@@ -60,50 +65,79 @@ function git_prompt_info() {
 	echo "$result"
 }
 
-function get_pwd() {
-  basename `print -D $PWD`
-}
+# %n - username
+# %m - host up to the first .
+# %c - the current path, shortened
 
-function put_spacing() {
-  local git=$(git_prompt_info)
-  if [ ${#git} != 0 ]; then
-  	# the 10 is for the colour codes that are also taken into consideration
-    ((git=${#git} - 10))
-  else
-    git=0
-  fi
+# Conditional substring
+# %(x.true-text.false-text)
+   #   !      True if the shell is running with privileges.
+   #   #      True if the effective uid of the current process is n.
+   #   ?      True if the exit status of the last command was n.
+   #   _      True if at least n shell constructs were started.
+   #   C
+   #   /      True if the current absolute path has at least n elements
+   #          relative to the root directory, hence / is counted  as  0
+   #          elements.
+   #   c
+   #   .
+   #   ~      True if the current path, with prefix replacement, has at
+   #          least n elements relative to the root directory, hence  /
+   #          is counted as 0 elements.
+   #   D      True if the month is equal to n (January = 0).
+   #   d      True if the day of the month is equal to n.
+   #   g      True if the effective gid of the current process is n.
+   #   j      True if the number of jobs is at least n.
+   #   L      True if the SHLVL parameter is at least n.
+   #   l      True  if  at least n characters have already been printed
+   #          on the current line.
+   #   S      True if the SECONDS parameter is at least n.
+   #   T      True if the time in hours is equal to n.
+   #   t      True if the time in minutes is equal to n.
+   #   v      True if the array psvar has at least n elements.
+   #   V      True  if  element  n  of  the  array  psvar  is  set  and
+   #          non-empty.
+   #   w      True if the day of the week is equal to n (Sunday = 0).
 
-  local termwidth
-  # HOST%%.* - the host name up to the first . ; see %m in the PROMPT
-  local lenHost="${#HOST%%.*}"
-  local lenUser="${#USERNAME}"
-  local lenPwd="${#$(get_pwd)}"
-   # 3 for the @,: and <space>
-  (( termwidth = ${COLUMNS} - 3 - ${lenUser} - ${lenHost} - ${lenPwd} - ${git} ))
+__IS_CURR_DIR_GIT='0'
 
-  local spacing=""
-  for i in {1..$termwidth}; do
-    spacing="${spacing} "
-  done
-  echo $spacing
-}
-
-# Not using RPROMPT because I want the git prompt info on the same line as the other bits
-#   RPROMPT would have put it on the line with the cmd
-# Also, in precmd we can check the ssh session
+__SMILEY_FACE="%(?,,:()"
+__TIME="%T"
+# Before each command
 function precmd() {
-
-	if test -n "${SSH_TTY}" -o -n "$SSH_CLIENT" ; then
-		print -rP '
-$fg[cyan]%n@$bg[red]$fg[white]%m%{$reset_color%}$fg[cyan]: $fg[yellow]$(get_pwd)$(put_spacing)$(git_prompt_info)'
-	else
-		print -rP '
-$fg[cyan]%n@%m: $fg[yellow]$(get_pwd)$(put_spacing)$(git_prompt_info)'
-
-	fi
+   if test ${__IS_CURR_DIR_GIT} = '1' ; then
+      # git info
+      RPROMPT='${__SMILEY_FACE} $(git_prompt_info) ${__TIME}'
+   else
+      # sad smiley + time
+      RPROMPT="${__SMILEY_FACE} ${__TIME}"
+   fi
 }
 
-# Customising the prompt
+# Changing directory
+function chpwd () {
+   local st="$(git status 2>/dev/null)"
+   if [[ -n "$st" ]]; then
+      __IS_CURR_DIR_GIT='1'
+   else
+      __IS_CURR_DIR_GIT='0'
+   fi
+}
 
-PROMPT='%{$reset_color%}→ '
+USER="%{$fg[cyan]%}%n"
 
+# having %m doesn't work on my mac for some reason
+hostname=`hostname`
+hostname=${hostname%%.*}
+# hostame="%m"
+
+if test -n "${SSH_TTY}" -o -n "$SSH_CLIENT" ; then
+	HOST="%{$bg[red]%}%{$fg[white]%}${hostname}"
+else
+	HOST="${hostname}"
+fi
+CURR_DIR="%{$fg[yellow]%}%c"
+PRIVILIGES="%(!,#,$)"
+
+
+PROMPT="[%{$reset_color%}${USER}@${HOST}%{$reset_color%} ${CURR_DIR}%{$fg[cyan]%}]${PRIVILIGES}%{$reset_color%} "
