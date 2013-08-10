@@ -40,8 +40,10 @@ function git_prompt_info() {
 
 	 	if [[ ! $st =~ 'nothing to commit' ]]; then
 	     __CURRENT_GIT_BRANCH_IS_DIRTY='1'
+	     echo "DIRTY"
 	   else
 	    	__CURRENT_GIT_BRANCH_IS_DIRTY=
+	    	echo "CLEAN"
 	 	fi
 
 	 	if test -n __CURRENT_GIT_BRANCH_IS_DIRTY; then
