@@ -40,18 +40,14 @@ function git_prompt_info() {
 
 	 	if [[ ! $st =~ 'nothing to commit' ]]; then
 	      __CURRENT_GIT_BRANCH_IS_DIRTY='1'
-	      echo "DIRTY"
 	   else
 	    	__CURRENT_GIT_BRANCH_IS_DIRTY='0'
-	    	echo "CLEAN"
 	 	fi
 
 	 	if test ${__CURRENT_GIT_BRANCH_IS_DIRTY} = '1' ; then
 	 		result+=$ZSH_THEME_GIT_PROMPT_DIRTY
-	 		echo "DIRTY"
 	 	else
 	 		result+=$ZSH_THEME_GIT_PROMPT_CLEAN
-	 		echo "CLEAN"
 	 	fi
 
 		result+=$ZSH_THEME_GIT_PROMPT_PREFIX
