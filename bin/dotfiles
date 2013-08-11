@@ -231,6 +231,11 @@ if [[ ! -d ~/.dotfiles ]]; then
   else
     e_header "Downloading dotfiles via ssh"
     git clone --recursive git@github.com:rackenstein/dotfiles.git ~/.dotfiles
+
+    if [[ ! -d ~/.dotfiles ]]; then
+      e_header "Downloading dotfiles via https"
+      git clone --recursive https://github.com/rackenstein/dotfiles.git ~/.dotfiles
+    fi
   fi
 else
 # Or update otherwise
