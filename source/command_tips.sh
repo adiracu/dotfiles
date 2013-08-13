@@ -57,6 +57,15 @@ echo -e "`emph_it "   --exclude-dir=\"pattern\" pattern folder_to_search_in"`   
 `emph_it "   -v pattern folder_to_search_in" `                      : --invert--match, all the lines that do not match
 "'
 
+alias gittips='
+
+
+'
+
+
+# git push --all ssh://adrianracu@noplanproductions.com/home/adrianracu/apps.noplanproductions.com/iTuneControl.git
+
+
 alias sedtips='
 echo -e "
 `emph_it "  -n"`                     : --quiet, disables auto printing of pattern space. To print, you must explicitly use `emph_it p`

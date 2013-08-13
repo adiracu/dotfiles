@@ -2,6 +2,7 @@ NOT_YET_DONE="Not overwritten by OS specific function"
 # Typos / Shortcuts
 
 alias ll='ls -l'
+alias clear='echo "Use CTRL+L"'
 
 # OSX doesnt have this..
 alias ls='ls --color=auto'
