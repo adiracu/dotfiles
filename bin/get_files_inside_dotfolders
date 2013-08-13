@@ -1,3 +1,142 @@
 #!/bin/bash
 
+# if it is passed a dotfolder, it will traverse the folder and
+#    return the most deep files/folders that to not have a corresponding existing
+#    counterpart already in $HOME.
+#
+# e.g. if there already exists in my $HOME, a folder .dotfolderA
+#  .dotfolderA
+#   ├── fileA1
+#   ├── fileA2
+#   └── folderB
+#        ├── fileB1
+#        └── fileB2
+#  and it has been passed to this script another folder .dotfolderA, with the contents
+#  .dotfolderA'
+#   ├── fileA1'
+#   ├── folderB'
+#   │    ├── fileB2'
+#   │    └── folderC'
+#   │         └─ fileC1'
+#   └── fileA3'
+#  the ' is just there to represented a diff file by the same name
+#
+#  then this will return:
+#   .dotfolderA'/fileA1'
+#   .dotfolderA'/folderB'/fileB2'
+#   .dotfolderA'/folderB'/folderC'
+#   .dotfolderA'/fileA3'
+#
+#  With this result, you can then create 4 symbolic links to obtain this in the end, in $HOME:
+#
+#  .dotfolderA
+#   ├── fileA1 -> fileA1'
+#   ├── fileA2
+#   ├── folderB
+#   │    ├── fileB1
+#   │    ├── fileB2 -> fileB2'
+#   │    └── folderC -> folderC'
+#   │                        └─ fileC1'
+#   └── fileA3 -> fileA3'
+#
+#  Otherwise, if only one symbolic link would have been done, then .dotfolderA would point to .dotfolderA'
+#    and fileA2 and fileB1 would be lost.
+#
+#
+#
+
+
+#
+#
+
+
+# Check for given arguments
+
+if [[ "$1" == "-h" || "$1" == "--help" ]]; then cat <<HELP
+
+Usage: $(basename "$0") folder_to_search path_to_ignore
+
+Returns all paths to files/folders inside path_to_search so that the risk of losing data while performing
+a symbolic link on folders is minimized. Basically merge with symbolic links.
+For an example see the comments at the top of the script.
+
+e.g.$(basename "$0") ~/.dotfiles/link/.ssh ~/.dotfiles/link
+HELP
+exit; fi
+
+if test $# -ne 1; then
+	echo "Need a path to search in." 1>&2
+	exit 1
+fi
+
+if test -f $1; then
+	echo $1
+	exit 0
+fi
+
+# It has been passed a directory
+
+
+
+
+# e.g.
+# we are getting passed ~/.dotfiles/link/a . Traversing a file:
+#   ~/.dotfiles/link/a/b/c/c1.file
+#    extract the a/b/c/c1.file
+#  go from left to right and check if there exists a counterpart in $HOME
+#  return the first thing it doesnt exist, if any
+#  otherwise return the full file
+
+
+# ~/.dotfiles/link/a
+initial_search_directory=${1}
+# ~/.dotfiles/link
+path_to_ignore=`dirname ${initial_search_directory}` #
+
+ALL_RESULTS=
+for file in `find ${initial_search_directory} -type f`; do
+	# e.g. of file : ~/.dotfiles/link/a/b/c/c1.file
+
+	#a/b/c/c1.file
+	remaining_path=${file#$path_to_ignore/}
+
+	# c1.file
+	filename=`basename ${remaining_path}`
+
+	curr_folder=${remaining_path}
+
+	# store the result of the file/folder that should be linked
+	corresponding_result_path=${HOME}
+
+	# Go through the folders left to right
+	while test ${curr_folder} != ${filename}; do
+
+		# get the first folder; first time around : a
+		curr_folder=${remaining_path%%/*}
+
+		# move the remaining path
+		#  from a/b/c/c1.file to b/c/c1.file
+		remaining_path=${remaining_path#*/}
+
+		# $HOME + currfolder ... it keeps building
+		corresponding_result_path=${corresponding_result_path}"/"${curr_folder}
+
+		if test ! -e ${corresponding_result_path}; then
+			break
+		fi
+	done
+
+	# we now have the result, this is what we need to return
+	ALL_RESULTS=${ALL_RESULTS}'\n'${corresponding_result_path}
+done
+
+#remove leading '\n'
+ALL_RESULTS=${ALL_RESULTS:2}
+
+# the same parent folder might be duplicated for multiple files
+echo -e $ALL_RESULTS | sort -u
+
+
+
+
 
