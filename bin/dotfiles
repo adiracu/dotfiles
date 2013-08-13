@@ -77,7 +77,6 @@ function init_header() { e_header "Running initialization scripts"; }
 #                              $3 the destination of the file
 function init_do() {
   e_success "Initializing ${2#$HOME/.dotfiles/}"
-  echo "$2"
   source "$2"
 }
 
@@ -163,7 +162,7 @@ ${allLabelDots}"
       # Run _test function only if declared.
       if [[ $(declare -f "$1_test") ]]; then
         # If _test function returns a string, skip file and print that message.
-        skip="$("$1_test" "$file" "$dest")"
+        skip="$("$1_test" "$file_folder" "$dest")"
         if [[ "$skip" ]]; then
           e_error "Skipping ~/$file_stripped, $skip."
           continue
@@ -182,7 +181,7 @@ ${allLabelDots}"
 
       # Do stuff.
       if ! skipFileNamed $file_stripped ; then
-        "$1_do" "$file_stripped" "$file" "$dest"
+        "$1_do" "$file_stripped" "$file_folder" "$dest"
       fi
 
     done
