@@ -141,3 +141,6 @@ PRIVILIGES="%(!,#,$)"
 
 
 PROMPT="[%{$reset_color%}${USER}@${HOST}%{$reset_color%} ${CURR_DIR}%{$fg[cyan]%}]${PRIVILIGES}%{$reset_color%} "
+
+# fake a ch pwd so that the current git status is read and drawn if necessary
+chpwd
