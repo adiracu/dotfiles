@@ -106,7 +106,7 @@ for file in `find ${initial_search_directory} -type f`; do
 	curr_folder=${remaining_path}
 
 	# store the result of the file/folder that should be linked
-	corresponding_result_path=${HOME}
+	corresponding_result_path=${path_to_ignore}
 
 	# Go through the folders left to right
 	while test ${curr_folder} != ${filename}; do
