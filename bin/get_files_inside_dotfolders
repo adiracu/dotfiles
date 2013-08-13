@@ -14,11 +14,12 @@
 #  and it has been passed to this script another folder .dotfolderA, with the contents
 #  .dotfolderA'
 #   ├── fileA1'
-#   ├── folderB'
-#   │    ├── fileB2'
-#   │    └── folderC'
-#   │         └─ fileC1'
-#   └── fileA3'
+#   ├── fileA3'
+#   └── folderB'
+#        ├── fileB2'
+#        └── folderC'
+#             └─ fileC1'
+#
 #  the ' is just there to represented a diff file by the same name
 #
 #  then this will return:
@@ -32,12 +33,13 @@
 #  .dotfolderA
 #   ├── fileA1 -> fileA1'
 #   ├── fileA2
-#   ├── folderB
-#   │    ├── fileB1
-#   │    ├── fileB2 -> fileB2'
-#   │    └── folderC -> folderC'
-#   │                        └─ fileC1'
-#   └── fileA3 -> fileA3'
+#   ├── fileA3 -> fileA3'
+#   └── folderB
+#        ├── fileB1
+#        ├── fileB2 -> fileB2'
+#        └── folderC -> folderC'
+#                            └─ fileC1'
+#
 #
 #  Otherwise, if only one symbolic link would have been done, then .dotfolderA would point to .dotfolderA'
 #    and fileA2 and fileB1 would be lost.
