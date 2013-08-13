@@ -108,7 +108,8 @@ for file in `find ${initial_search_directory} -type f`; do
 	curr_folder=${remaining_path}
 
 	# store the result of the file/folder that should be linked
-	corresponding_result_path=${path_to_ignore}
+	result_path=${path_to_ignore}
+	corresponding_path_to_check="$HOME"
 
 	# Go through the folders left to right
 	while test ${curr_folder} != ${filename}; do
@@ -121,15 +122,16 @@ for file in `find ${initial_search_directory} -type f`; do
 		remaining_path=${remaining_path#*/}
 
 		# $HOME + currfolder ... it keeps building
-		corresponding_result_path=${corresponding_result_path}"/"${curr_folder}
+		result_path=${result_path}"/"${curr_folder}
+		corresponding_path_to_check=${corresponding_path_to_check}"/"${curr_folder}
 
-		if test ! -e ${corresponding_result_path}; then
+		if test ! -e ${corresponding_path_to_check}; then
 			break
 		fi
 	done
 
 	# we now have the result, this is what we need to return
-	ALL_RESULTS=${ALL_RESULTS}'\n'${corresponding_result_path}
+	ALL_RESULTS=${ALL_RESULTS}'\n'${result_path}
 done
 
 #remove leading '\n'

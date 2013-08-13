@@ -72,8 +72,12 @@ function skipFileNamed() {
 # Initialization scripts
 function init_header() { e_header "Running initialization scripts"; }
 
+# *_do functions have passed : $1 the shortest 'basename' of the file/folder, so that it makes sense; used for printing
+#                              $2 the full path of the file they should perform their operation on
+#                              $3 the destination of the file
 function init_do() {
   e_success "Initializing ${2#$HOME/.dotfiles/}"
+  echo "$2"
   source "$2"
 }
 
@@ -88,7 +92,7 @@ function copy_test() {
 }
 function copy_do() {
   e_success "Copying ~/$1."
-  cp -r "${2}" "${HOME}"
+  cp -r "${2}" $(dirname ${3})
 }
 
 # Linking files/folders
@@ -97,11 +101,12 @@ function link_test() {
   [[ "$1" -ef "$2" ]] && echo "same file"
 }
 function link_do() {
-  e_success "Linking ~/$1."
+  e_success "Linking $1."
   # -s : create a symbolic link
   # -f : if the target file exists, unlink it so that this link can occur
   # $2 : the full path, so strip the $HOME directory from it
-  ln -sf ${2#$HOME/} "${HOME}"
+  echo "Linking from $2 to $3"
+  ln -sf ${2} ${3}
 }
 
 # Get all the valid files from the path and run
@@ -123,12 +128,12 @@ function do_stuff() {
   allImmediateFiles=`find ${searchPath} -maxdepth 1 -type f`
   # And the dot folders there.
   allImmediateDotfolders=`find ${searchPath} -maxdepth 1 -type d -name ".*"`
-  # All dotfiles belonging to the current labels
-  allLabelDotfiles=`"${HOME}"/.dotfiles/bin/get_dots_for_label "${searchPath}"`
+  # All dots(files & folders) belonging to the current labels
+  allLabelDots=`"${HOME}"/.dotfiles/bin/get_dots_for_label "${searchPath}"`
 
   allFiles="${allImmediateFiles}
 ${allImmediateDotfolders}
-${allLabelDotfiles}"
+${allLabelDots}"
 
   # No files? abort.
   if [[ ! $allFiles ]]; then return; fi
@@ -137,35 +142,48 @@ ${allLabelDotfiles}"
   OLD_IFS="${IFS}"
   IFS=$'\n'
 
-  for file in ${allFiles}; do
-    base="$(basename $file)"
-    dest="$HOME/$base"
+  for outer_file in ${allFiles}; do
 
-    # Run _test function only if declared.
-    if [[ $(declare -f "$1_test") ]]; then
-      # If _test function returns a string, skip file and print that message.
-      skip="$("$1_test" "$file" "$dest")"
-      if [[ "$skip" ]]; then
-        e_error "Skipping ~/$base, $skip."
-        continue
+    # $HOME/a
+    for file in $("${HOME}"/.dotfiles/bin/get_files_inside_dotfolders "${outer_file}"); do
+
+      # e.g. go from /Users../.dotfiles/link/osx/a/a3.file -> osx/a/a3.file
+      file_stripped=${file##$searchPath/}
+
+      # if the very first part until the first / is a label, that needs to be stripped as well
+      if grep ${file_stripped%%/*}  ${HOME}"/.dotfiles/conf/labels_detected" &>/dev/null; then
+        # go from osx/a/a3.file -> a/a3.file
+        file_stripped=${file_stripped#*/}
       fi
-      # Destination file already exists in ~/. Back it up!
-      if [[ -e "$dest" ]]; then
-        e_arrow "Backing up ~/$base."
-        # Set backup flag, so a nice message can be shown at the end.
-        backup=1
-        # Create backup dir if it doesn't already exist.
-        [[ -e "$backup_dir" ]] || mkdir -p "$backup_dir"
-        # Backup file / link / whatever.
-        mv "$dest" "$backup_dir"
+
+      dest="$HOME/$file_stripped"
+
+      # Run _test function only if declared.
+      if [[ $(declare -f "$1_test") ]]; then
+        # If _test function returns a string, skip file and print that message.
+        skip="$("$1_test" "$file" "$dest")"
+        if [[ "$skip" ]]; then
+          e_error "Skipping ~/$file_stripped, $skip."
+          continue
+        fi
+        # Destination file already exists in ~/. Back it up!
+        if [[ -e "$dest" ]]; then
+          e_arrow "Backing up ~/$file_stripped."
+          # Set backup flag, so a nice message can be shown at the end.
+          backup=1
+          # Create backup dir if it doesn't already exist.
+          [[ -e "$backup_dir" ]] || mkdir -p "$backup_dir"
+          # Backup file / link / whatever.
+          mv "$dest" "$backup_dir"
+        fi
       fi
-    fi
 
-    # Do stuff.
-    if ! skipFileNamed $base ; then
-      "$1_do" "$base" "$file"
-    fi
+      # Do stuff.
+      if ! skipFileNamed $file_stripped ; then
+        "$1_do" "$file_stripped" "$file" "$dest"
+      fi
 
+    done
 
 
   done
