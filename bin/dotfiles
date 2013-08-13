@@ -180,7 +180,7 @@ ${allLabelDots}"
       fi
 
       # Do stuff.
-      if ! skipFileNamed $file_stripped ; then
+      if ! skipFileNamed $(basename $file_stripped) ; then
         "$1_do" "$file_stripped" "$file_folder" "$dest"
       fi
 
