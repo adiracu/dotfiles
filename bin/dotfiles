@@ -142,13 +142,15 @@ ${allLabelDots}"
   OLD_IFS="${IFS}"
   IFS=$'\n'
 
-  for outer_file in ${allFiles}; do
+
+  for outer_file_folder in ${allFiles}; do
 
     # $HOME/a
-    for file in $("${HOME}"/.dotfiles/bin/get_files_inside_dotfolders "${outer_file}"); do
+    # technically $file can be either a file or folder
+    for file_folder in $("${HOME}"/.dotfiles/bin/get_files_inside_dotfolders "${outer_file_folder}"); do
 
       # e.g. go from /Users../.dotfiles/link/osx/a/a3.file -> osx/a/a3.file
-      file_stripped=${file##$searchPath/}
+      file_stripped=${file_folder##$searchPath/}
 
       # if the very first part until the first / is a label, that needs to be stripped as well
       if grep ${file_stripped%%/*}  ${HOME}"/.dotfiles/conf/labels_detected" &>/dev/null; then
