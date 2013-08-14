@@ -1,4 +1,5 @@
 osx:uname:Darwin
 arch:cat /etc/os-release | head -n 1 | cut -d "=" -f2:Arch Linux
 work:cat /etc/redhat-release:Fedora
-trala: test -d $HOME/noplanproductions.com; echo $?:0
+gitrepo:test -e ~/gitolite; echo $?:0
+npp:test -e ~/noplanproductions.com; echo $?:0
