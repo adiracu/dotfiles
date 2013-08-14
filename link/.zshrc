@@ -59,7 +59,7 @@ PATH=~/.dotfiles/bin:$PATH
 export PATH
 
 function src_zsh() {
-  source source_dotfiles --extension zsh
+  source source_files --extension zsh
 }
 
 # Run dotfiles script, then source.
