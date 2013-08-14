@@ -65,6 +65,7 @@ To be more precise, the `dotfiles` script passes to de `init`, `copy` and `link`
 A dotfolder is a folder that start with a `.`. When being passed a dotfolder, the `dotfiles` script will try and merge the contents of the dotfolder with the actual contents already present in $HOME.
 
 e.g.
+
  	 in $HOME             in ~/.dotfiles/..
 
     .dotfolderA            .dotfolderA'
