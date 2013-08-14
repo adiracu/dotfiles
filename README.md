@@ -68,11 +68,17 @@ e.g.
  	in $HOME             in ~/.dotfiles/..
 
   .dotfolderA            .dotfolderA'
+
    ├── fileA1              ├── fileA1'
+
    ├── fileA2              ├── fileA3'
+
    └── folderB             └── folderB'
+
         ├── fileB1              ├── fileB2'
+
         └── fileB2              └── folderC'
+
                                      └─ fileC1'
 
 
