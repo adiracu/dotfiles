@@ -1,15 +1,15 @@
 #!/bin/bash
 
-# returns the relevant dotfiles for the currently set labels from a path
+# returns the files and folders for the currently set labels from a path
 # e.g. get_dots_for_label ~/.dotfiles/init
 #   if the currently set label is osx
-#    it will return all the files and folders found in ~/.dotfiles/init/osx
+#    it will return all the files and folders at depth 1 found in ~/.dotfiles/init/osx
 
 if [[ "$1" == "-h" || "$1" == "--help" ]]; then cat <<HELP
 
 Usage: $(basename "$0") path_to_search
 
-Returns all dotfiles and dotfolders found in the label folders within path_to_search.
+Returns all files and folders found in the label folders within path_to_search.
 
 HELP
 exit; fi
