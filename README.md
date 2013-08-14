@@ -71,9 +71,7 @@ e.g.
     .dotfolderA            .dotfolderA'
 
     ├── fileA1              ├── fileA1'
-
     ├── fileA2              ├── fileA3'
-
     └── folderB             └── folderB'
 
         ├── fileB1              ├── fileB2'
