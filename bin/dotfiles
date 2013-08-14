@@ -77,7 +77,7 @@ function init_header() { e_header "Running initialization scripts"; }
 #                              $3 the destination of the file
 function init_do() {
   e_success "Initializing ${2#$HOME/.dotfiles/}"
-  source "$2"
+  bash "$2"
 }
 
 # Copying files/folders
