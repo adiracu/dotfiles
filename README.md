@@ -67,19 +67,17 @@ A dotfolder is a folder that start with a `.`. When being passed a dotfolder, th
 e.g.
  	in $HOME             in ~/.dotfiles/..
 
-`  .dotfolderA            .dotfolderA'
+`  .dotfolderA            .dotfolderA'`
+`   ├── fileA1              ├── fileA1'`
+  ` ├── fileA2              ├── fileA3'`
 
-   ├── fileA1              ├── fileA1'
+   `└── folderB             └── folderB'`
 
-   ├── fileA2              ├── fileA3'
+    `    ├── fileB1              ├── fileB2'`
 
-   └── folderB             └── folderB'
+        `└── fileB2              └── folderC'`
 
-        ├── fileB1              ├── fileB2'
-
-        └── fileB2              └── folderC'
-
-                                     └─ fileC1'`
+         `                            └─ fileC1'`
 
 
 
