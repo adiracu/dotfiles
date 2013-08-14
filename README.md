@@ -100,7 +100,7 @@ As opposed to doing the entire directory passed, `dotfiles` will traverse it and
 The script `bin/install_all_for_labels` will check if predefined commands exists, and if not, it will try to install it using the appropriate package manager. It uses:
 
 	1. the package manager specified in `conf/detected_label/package_manager`
-	2. the rules specified in `conf/detected_label/packages` specified in the form
-	             `cmd_to_test:package_to_install_if_cmd_missing`
+	2. the rules specified in `conf/detected_label/packages` specified in the form:
+	                         `cmd_to_test:package_to_install_if_cmd_missing`
 	3. if the package manager does not exists, it will try to install it (only for `brew` atm)
 
