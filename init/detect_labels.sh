@@ -12,6 +12,8 @@
 
 		if [[ "${result}" == *${EXPECTED_STRING_TO_CONTAIN}*  ]]; then
 			echo "${OS_KEY}" > ~/.dotfiles/conf/labels_detected
+
+			echo "${OS_KEY}"
 		# 	echo "IT IS ${OS_KEY}"
 		# else
 		# 	echo "IT IS NOT ${OS_KEY}"
