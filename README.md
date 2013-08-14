@@ -64,17 +64,35 @@ To be more precise, the `dotfiles` script passes to de `init`, `copy` and `link`
 
 A dotfolder is a folder that start with a `.`. When being passed a dotfolder, the `dotfiles` script will try and merge the contents of the dotfolder with the actual contents already present in $HOME.
 
-e.g.
+e.g. for link
 
- 	 in $HOME               in ~/.dotfiles/..
+ 	 in $HOME               in ~/.dotfiles/link/        would result in $HOME
 
-    .dotfolderA            .dotfolderA'
+    .dotfolderA            .dotfolderA'                 .dotfolderA -> ~/.dotfiles/link/.dotfolderA'
     ├── fileA1              ├── fileA1'
     ├── fileA2              ├── fileA3'
     └── folderB             └── folderB'
         ├── fileB1              ├── fileB2'
         └── fileB2              └── folderC'
                                      └─ fileC1'
+
+Doing this, the original files `$HOME/.dotfolderA/fileA2` and `$HOME/.dotfolderB/fileB1` are lost
+
+As opposed to doing the entire directory passed, `dotfiles` will traverse it and try to merge them.
+
+e.g.
+
+ 	 in $HOME               in ~/.dotfiles/link/        would result in $HOME
+
+    .dotfolderA            .dotfolderA'                 .dotfolderA
+    ├── fileA1              ├── fileA1'                   ├── fileA1 -> fileA1'
+    ├── fileA2              ├── fileA3'                   ├── fileA2
+    └── folderB             └── folderB'                  ├── fileA3 -> fileA3'
+        ├── fileB1              ├── fileB2'               └── folderB
+        └── fileB2              └── folderC'                   ├── fileB1
+                                     └─ fileC1'                ├── fileB2 -> fileB2'
+                                                               └── folderC -> folderC'
+                                                                                   └─ fileC1'
 
 
 
