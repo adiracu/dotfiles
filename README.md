@@ -95,7 +95,7 @@ As opposed to doing the entire directory passed, `dotfiles` will traverse it and
 
 
 # Automatically install packages
-## should be called manually
+#### called manually
 
 The script `bin/install_all_for_labels` will check if predefined commands exists, and if not, it will try to install it using the appropriate package manager. It uses:
 
