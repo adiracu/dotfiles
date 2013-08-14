@@ -12,9 +12,11 @@ running ~/.dotfiles/bin/dotfiles will do:
 1. Git is installed if necessary, via pacman. If there is no pacman, it fails.
 2. This repo is cloned or updated into `~/.dotfiles` the directory
 3. Files in `bin` are added to the PATH
-4. Files in `init` are executed, in alphanumeric order
-5. Files in `copy` are copied into `~/`
-6. Files in `link` are linked into `~/`
+4. Files/dotfolders in `init` are executed, in alphanumeric order
+5. Files/dotfolders in `copy` are copied into `~/`
+6. Files/dotfolders in `link` are linked into `~/`
+
+, where dotfs means files
 
 N.B. Files overwritten by `copy` and `link` are saved into the `backups` directory
 
@@ -23,8 +25,8 @@ N.B.2 Files with the exact filename found in `conf/dotfiles_ignore` will be skip
 
 Also, the current setup (.bashrc | .zshrc) will :
 
-* source files in `source` in alphanumeric order.
-* source files in `source/valid_label` (see Labels below)
+* source files ending in (*.sh | *.zsh) in `source` in alphanumeric order.
+* source files ending in (*.sh | *.zsh) in `source/valid_label` (see Labels below)
 
 whenever a new shell is opened.
 
@@ -58,7 +60,25 @@ To be more precise, the `dotfiles` script passes to de `init`, `copy` and `link`
 	2. all dot folders found in the respective folder at depth 1; their name has to start with "."
 	3. all the files and folders found in the respective label folders
 
+# Dotfolders
+
+A dotfolder is a folder that start with a `.`. When being passed a dotfolder, the `dotfiles` script will try and merge the contents of the dotfolder with the actual contents already present in $HOME.
+
+e.g.
+ 	in $HOME             in ~/.dotfiles/..
+
+  .dotfolderA            .dotfolderA'
+   ├── fileA1              ├── fileA1'
+   ├── fileA2              ├── fileA3'
+   └── folderB             └── folderB'
+        ├── fileB1              ├── fileB2'
+        └── fileB2              └── folderC'
+                                     └─ fileC1'
+
+
+
 # Automatically install packages
+## should be called manually
 
 The script `bin/install_all_for_labels` will check if predefined commands exists, and if not, it will try to install it using the appropriate package manager. It uses:
 
