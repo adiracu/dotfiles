@@ -62,16 +62,16 @@ To be more precise, the `dotfiles` script passes to de `init`, `copy` and `link`
 
 # Dotfolders
 
-A dotfolder is a folder that start with a `.`. When being passed a dotfolder, the `dotfiles` script will try and merge the contents of the dotfolder with the actual contents already present in $HOME.
+A dotfolder is a folder that start with a `.`. When being passed a dotfolder, the `dotfiles` script will try and merge the contents of the dotfolder with the actual contents already present in $HOME. For example, assume that `~/.dotfiles/link/.dotfolderA` is being passed to the `link` function, and that there already exists a `~/.dotfolderA`.
 
-e.g. for link
+e.g.
 
- 	 in $HOME               in ~/.dotfiles/link/        would result in $HOME
+ 	 in ~                  in ~/.dotfiles/link/        would result in $HOME
 
     .dotfolderA            .dotfolderA'                 .dotfolderA -> ~/.dotfiles/link/.dotfolderA'
     ├── fileA1              ├── fileA1'
     ├── fileA2              ├── fileA3'
-    └── folderB             └── folderB'
+    └── folderB             └── folderB'        =>
         ├── fileB1              ├── fileB2'
         └── fileB2              └── folderC'
                                      └─ fileC1'
@@ -82,12 +82,12 @@ As opposed to doing the entire directory passed, `dotfiles` will traverse it and
 
 e.g.
 
- 	 in $HOME               in ~/.dotfiles/link/        would result in $HOME
+ 	 in ~                  in ~/.dotfiles/link/        would result in $HOME
 
     .dotfolderA            .dotfolderA'                 .dotfolderA
     ├── fileA1              ├── fileA1'                   ├── fileA1 -> fileA1'
     ├── fileA2              ├── fileA3'                   ├── fileA2
-    └── folderB             └── folderB'                  ├── fileA3 -> fileA3'
+    └── folderB             └── folderB'        =>        ├── fileA3 -> fileA3'
         ├── fileB1              ├── fileB2'               └── folderB
         └── fileB2              └── folderC'                   ├── fileB1
                                      └─ fileC1'                ├── fileB2 -> fileB2'
