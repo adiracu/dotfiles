@@ -128,7 +128,7 @@ function do_stuff() {
   # And the dot folders there.
   allImmediateDotfolders=`find ${searchPath} -maxdepth 1 -type d -name ".*"`
   # All dots(files & folders) belonging to the current labels
-  allLabelDots=`"${HOME}"/.dotfiles/bin/get_dots_for_label "${searchPath}"`
+  allLabelDots=`"${HOME}"/.dotfiles/bin/get_files_folders_for_labels "${searchPath}"`
 
   allFiles="${allImmediateFiles}
 ${allImmediateDotfolders}
@@ -180,7 +180,7 @@ ${allLabelDots}"
       fi
 
       # Do stuff.
-      if ! skipFileNamed $(basename $file_stripped) ; then
+      if ! skipFileNamed $(basename   $file_stripped) ; then
         "$1_do" "$file_stripped" "$file_folder" "$dest"
       fi
 

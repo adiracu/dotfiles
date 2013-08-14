@@ -11,7 +11,7 @@ Usage: $(basename "$0") [--extension]
 It sources all files ending in the specified extension:
 
   1. Files found in the top level directory of 'source/'
-  2. Label files (only files!) found in 'source/label', as returned by 'bin/get_dots_for_label'
+  2. Label files (only files!) found in 'source/label', as returned by 'bin/get_files_folders_for_labels'
 
 N.B. This script should itself be sourced, otherwise it serves little purpose..
 HELP
@@ -39,7 +39,7 @@ function src() {
    local OLD_IFS="$IFS"
    IFS=$'\n'
 
-    for file in `$HOME/.dotfiles/bin/get_dots_for_label ~/.dotfiles/source` ; do
+    for file in `$HOME/.dotfiles/bin/get_files_folders_for_labels ~/.dotfiles/source` ; do
       if test -f "${file}"; then
         if test ${file##*.} = "$EXTENSION" ; then
     	   source $file
