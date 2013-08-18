@@ -57,6 +57,10 @@ echo -e "`emph_it "   --exclude-dir=\"pattern\" pattern folder_to_search_in"`   
 `emph_it "   -v pattern folder_to_search_in" `                      : --invert--match, all the lines that do not match
 "'
 
+alias sorttips='
+echo -e "`emph_it "   -c file_to_check"`                      : --check if the file is sorted, reporting first exception otherwise
+"'
+
 alias gittips='
 
 
