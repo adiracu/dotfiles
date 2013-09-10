@@ -1,6 +1,6 @@
 
 # os x doesn't have -F
-alias psef='ps -ef'
+psef () { ps -ef $@ ; }
 
 alias ls='ls -G'
 

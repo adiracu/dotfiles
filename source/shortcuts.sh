@@ -12,8 +12,9 @@ alias grpe='grep'
 
 alias jobs='jobs -l'
 
-# overwritten by osx
-alias psef='ps -eF'
+# overwritten by osx; needs to be a function because it's used in psefgrep
+#   with just an alias, it get replaced to -eF even for osx
+psef () { ps -eF $@ ; }
 
 # man
 manjump () {    # Bash
