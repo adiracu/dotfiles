@@ -3,6 +3,68 @@
 
 function emph_it()   { echo -e "\033[0;36m$@\033[0m"; }
 
+alias tips='
+echo -e " Commands
+`emph_it  "cal sept 1975"`   : quickly look up a calendar month
+`emph_it "man {ascii|5 hosts.allow|7 regex}"` : useful man pages
+`emph_it "xxd < file "`     : hexdump of file
+`emph_it "xxd -i file"`     : hexdump in a C style var declaration
+`emph_it "lsof"`            : shows open file handles, sockets etc.
+`emph_it "iftop"`           : top for network; alternative `emph_it vnstat`
+`emph_it "cd -"`            : cd to prev directory
+`emph_it "tail -f file"`    : or can use `emph_it "less +F file"`
+`emph_it "strace -ttT executable"`   : monitor OS calls for process
+`emph_it "units"`           : convert units, interactive
+`emph_it "mdfind"`          : uses spotlight on mac
+`emph_it "cat /dev/dsp | ssh me@remotebox cat > /dev/dsp"` : pipe SSH; play audio remotely (cmd in quotes)
+
+ BASH built-ins
+`emph_it "disown"`          : bash built-in, alternative to `emph_it nohup`
+`emph_it "fc"`              : run the last command in \$EDITOR and run it afterwards
+`emph_it "sudo !!"`         : !! is replaced with last command
+`emph_it "^find^replace"`   : bash find/replace in last command
+
+"'
+
+
+alias gittips='
+
+
+'
+
+
+# git push --all ssh://adrianracu@noplanproductions.com/home/adrianracu/apps.noplanproductions.com/iTuneControl.git
+
+
+alias greptips='
+echo -e "`emph_it "   --exclude-dir=\"pattern\" pattern folder_to_search_in"`   : if -R is specified, it exlucdes directories matching the pattern from the search
+`emph_it "   -E pattern folder_to_search_in"`                      : --extended-regexp, use extended regular expression. See `emph_it egrep`
+`emph_it "   -i pattern folder_to_search_in"`                      : --ignore-case
+`emph_it "   -n pattern folder_to_search_in"`                      : --line-number, output line preceded by line number
+`emph_it "   -r pattern folder_to_search_in"`                      : -R, --recursive, search recursively
+`emph_it "   -v pattern folder_to_search_in" `                      : --invert--match, all the lines that do not match
+"'
+
+
+alias lsoftips='
+echo -e " List open files
+`emph_it "  lsof"`               : list all open files belonging to active processes
+`emph_it "  -c nameStart"`  : only show processes whose names start with nameStart
+`emph_it "  -u user"`       : only show processes whose user is user
+`emph_it "  -u ^user"`      : only show processes whose user is not user
+`emph_it "  -p PID"`        : only show process with PID
+
+`emph_it "  lsof FILE"` : list processes that opened FILE(e.g. mount point)
+`emph_it "   +D DIR"`   : list processes that opened files under DIR
+
+"'
+
+
+alias lstips='
+echo -e "`emph_it "  -h"`              : print in human readable format
+`emph_it "  -S"`              : sort by size
+"'
+
 
 alias mantips='
 echo -e "`emph_it man 1-9 page_name`              : gets the page from that section
@@ -28,47 +90,6 @@ echo -e "`emph_it man 1-9 page_name`              : gets the page from that sect
 
 `emph_it zcat`                           : cat for man pages
 "'
-
-alias lstips='
-echo -e "`emph_it "  -h"`              : print in human readable format
-`emph_it "  -S"`              : sort by size
-"'
-
-
-alias tartips='
-echo -e "`emph_it "  -c"`    : create a tar file
-`emph_it "  -f"`    : specify the filename
-`emph_it "  -t"`    : table of contents
-`emph_it "  -x"`    : extract the contents of the tar file
-`emph_it "  -v"`    : verbose output
-`emph_it "  -z"`    : use zip/gzip as compression algorithm
-
-`emph_it "tar -cvzf archive.tgz my_folder"` : archive folder
-`emph_it "tar -tzf  archive.tgz"`           : see table of contents
-`emph_it "tar -xvzf archive.tgz"`           : extract the contents into the directory it is invoked from
-"'
-
-alias greptips='
-echo -e "`emph_it "   --exclude-dir=\"pattern\" pattern folder_to_search_in"`   : if -R is specified, it exlucdes directories matching the pattern from the search
-`emph_it "   -E pattern folder_to_search_in"`                      : --extended-regexp, use extended regular expression. See `emph_it egrep`
-`emph_it "   -i pattern folder_to_search_in"`                      : --ignore-case
-`emph_it "   -n pattern folder_to_search_in"`                      : --line-number, output line preceded by line number
-`emph_it "   -r pattern folder_to_search_in"`                      : -R, --recursive, search recursively
-`emph_it "   -v pattern folder_to_search_in" `                      : --invert--match, all the lines that do not match
-"'
-
-alias sorttips='
-echo -e "`emph_it "   -c file_to_check"`                      : --check if the file is sorted, reporting first exception otherwise
-"'
-
-alias gittips='
-
-
-'
-
-
-# git push --all ssh://adrianracu@noplanproductions.com/home/adrianracu/apps.noplanproductions.com/iTuneControl.git
-
 
 alias sedtips='
 echo -e "
@@ -104,5 +125,28 @@ Example script:
 # having it here, it works the same as passing -n as an arg, but this does not work in scripts
 d
 "'
+
+alias sorttips='
+echo -e "`emph_it "   -c file_to_check"`                      : --check if the file is sorted, reporting first exception otherwise
+"'
+
+alias sshtips='
+echo -e "`emph_it "cat /dev/dsp | ssh me@remotebox cat > /dev/dsp"` : pipe SSH; play audio remotely (cmd in quotes)
+"'
+
+
+alias tartips='
+echo -e "`emph_it "  -c"`    : create a tar file
+`emph_it "  -f"`    : specify the filename
+`emph_it "  -t"`    : table of contents
+`emph_it "  -x"`    : extract the contents of the tar file
+`emph_it "  -v"`    : verbose output
+`emph_it "  -z"`    : use zip/gzip as compression algorithm
+
+`emph_it "tar -cvzf archive.tgz my_folder"` : archive folder
+`emph_it "tar -tzf  archive.tgz"`           : see table of contents
+`emph_it "tar -xvzf archive.tgz"`           : extract the contents into the directory it is invoked from
+"'
+
 
 
