@@ -17,7 +17,8 @@ echo -e " Commands
 `emph_it "units"`           : convert units, interactive
 `emph_it "mdfind"`          : uses spotlight on mac
 `emph_it "cat /dev/dsp | ssh me@remotebox cat > /dev/dsp"` : pipe SSH; play audio remotely (cmd in quotes)
-
+`emph_it "split -b1m binaryfile"`    : split file into megabyte chunks
+ 
  BASH built-ins
 `emph_it "disown"`          : bash built-in, alternative to `emph_it nohup`
 `emph_it "fc"`              : run the last command in \$EDITOR and run it afterwards
