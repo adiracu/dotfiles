@@ -18,7 +18,7 @@ echo -e " Commands
 `emph_it "mdfind"`          : uses spotlight on mac
 `emph_it "cat /dev/dsp | ssh me@remotebox cat > /dev/dsp"` : pipe SSH; play audio remotely (cmd in quotes)
 `emph_it "split -b1m binaryfile"`    : split file into megabyte chunks
- 
+
  BASH built-ins
 `emph_it "disown"`          : bash built-in, alternative to `emph_it nohup`
 `emph_it "fc"`              : run the last command in \$EDITOR and run it afterwards
@@ -27,6 +27,53 @@ echo -e " Commands
 
 "'
 
+# \"`emph_it {print \$1}`
+alias awktips='
+echo -e "`emph_it "echo Jones 123 | awk"` \"`emph_it \{print \$\1\}`\"    : prints Jones
+`emph_it awk` \"`emph_it "BEGIN { FS = : } ; {print \$\2}"`\" : change the field separator
+                                     : the new FS needs to be wrapped in quotes
+"'
+
+alias findtips='
+echo -e "`emph_it "  -mindepth n"`      : do not apply any tests at levels less than n
+`emph_it "  -maxdepth n"`      : descend at most n directory levels
+`emph_it "  -name pattern"`    : true if the last component of the pathname matches pattern
+                   : use quotes to escape shell expansion
+`emph_it "  -iname pattern"`   : like `emph_it "name"`,but case insensitive
+`emph_it "  -type [fdl]"`      : {file, directory, symbolic link}
+`emph_it "  -perm  mode"`      : mode can be octal (`emph_it 644`) or symbolic (`emph_it -ug=w`)
+`emph_it "  -size n[ckMGTP]"`  : {bytes, kilo, mega, giga, tera, peta}
+                   : e.g. `emph_it -1K` (less than 1 kilo) or `emph_it +100M` (more than 100 megs)
+`emph_it "  -mtime n"`         : (time last modified - time find started) < than n days; use with -
+`emph_it "  -mmin n"`          : (time last modified - time find started) < than n minutes; use with -
+`emph_it "  -newer aFile"`     : true if file has more recent last modification than aFile
+                   : same as `emph_it -newermm`
+`emph_it "  -newerXY aFile"`   : X,Y can be
+                     : `emph_it a` - access time
+                     : `emph_it B` - inode creation time
+                     : `emph_it c` - change time
+                     : `emph_it m` - modification time
+                   : true if last X of file is more recent than Y of aFile
+                   : if Y is `emph_it t`, then aFile is interpreted as a date
+
+`emph_it "  -not expression"`  : NOT operator
+`emph_it "  -exec utility [argument ..] {} \;"`    : execute utility for each path in part
+`emph_it "  -exec utility [argument ..] {} \;"`    : same as before, but all paths are appended as arguments
+                                       : same as using `emph_it "find | xargs utility [argument ..]"`
+                                       : pipe to `emph_it xargs`; easier to remember
+
+
+`emph_it "find . -not -name "`\"`emph_it \*.java`\" `emph_it "-maxdepth 4 -mtime -2"`
+                   : all files not ending in .java, modified in the last 2 days
+                   : descend at most 4 directory levels
+`emph_it "find . -newermt "`\"`emph_it 2010-01-01`\"
+                   : all files not ending in .java, modified in the last 2 days
+`emph_it "find . -type f -newermt "`\"`emph_it 2013-01-01`\" `emph_it -not -newermt ` \"`emph_it 2013-06-01`\"
+                   : all files that have their last modification date within 01-01-2013 and 06-01-2013
+"'
+
+# `find -mindepth 2 -maxdepth 2`
+# `find -exec` : execute pe fiecare
 
 alias gittips='
 
@@ -38,12 +85,21 @@ alias gittips='
 
 
 alias greptips='
-echo -e "`emph_it "   --exclude-dir=\"pattern\" pattern folder_to_search_in"`   : if -R is specified, it exlucdes directories matching the pattern from the search
-`emph_it "   -E pattern folder_to_search_in"`                      : --extended-regexp, use extended regular expression. See `emph_it egrep`
-`emph_it "   -i pattern folder_to_search_in"`                      : --ignore-case
-`emph_it "   -n pattern folder_to_search_in"`                      : --line-number, output line preceded by line number
-`emph_it "   -r pattern folder_to_search_in"`                      : -R, --recursive, search recursively
-`emph_it "   -v pattern folder_to_search_in" `                      : --invert--match, all the lines that do not match
+echo -e " `emph_it      grep options pattern file...`
+`emph_it "   -A num"`                   : --after-context; print `emph_it num` of trailing lines after each match
+`emph_it "   -B num"`                   : --before-context; print `emph_it num` of leading lines after each match
+`emph_it "   -C num"`                   : --context; print `emph_it num` leading and trailing lines after each match
+`emph_it "   --exclude-dir=\"pattern\" "`   : if -R is specified, it excludes directories matching the pattern from the search
+`emph_it "   -e "`                      : --regexp; use it to specify multiple patterns
+`emph_it "   -E "`                      : --extended-regexp, use extended regular expression. See `emph_it egrep`
+`emph_it "   -i "`                      : --ignore-case
+`emph_it "   -n "`                      : --line-number, output line preceded by line number
+`emph_it "   -r "`                      : -R, --recursive, search recursively
+`emph_it "   -v "`                      : --invert--match, all the lines that do not match
+`emph_it "   -w "`                      : --word-regexp, the expression is search for as a word
+
+`emph_it "grep -nr"` \"`emph_it new Foo\(\)`\" `emph_it src`    : search for instantiation of Foo and show line number
+`emph_it "grep -e foo -e bar baz.txt "` : search for foo and bar in baz.txt
 "'
 
 
@@ -111,6 +167,16 @@ echo -e "
 `emph_it "sed -n \"1,10p\""`                  : print lines from 1 to 10 sed starts from line 1
                               : no easy equivalent for `emph_it tail`
 
+`emph_it "echo foo | sed"` \"s/foo/bar\"
+`emph_it "stuff | xargs sed -i "` \"s/foo/bar\" : replace in place on each file passed
+`emph_it find src/test -name` \"`emph_it \*Test.java`\" `emph_it "| xargs sed -i"` \"`emph_it s/Assert.assert/assert/`\"
+                         : in all java test classes, replace Assert.assertStuff with assertStuff
+`emph_it sed -i ` \"`emph_it /foo/ d`\" file    : delete lines containing foo
+`emph_it sed -i ` \"`emph_it /\^\#/ d`\" file     : delete lines starting with #
+`emph_it sed -i ` \"`emph_it 1,2 d`\" file      : delete first two lines
+`emph_it sed -i ` \"`emph_it /\^\$/ d`\" file     : delete blank lines
+`emph_it sed -i ` \"`emph_it 1,/\^\$/ d`\" file   : delete up to first blank line
+
 Example script:
 #!/usr/bin/sed -f
 # -f means script file follows
@@ -148,6 +214,13 @@ echo -e "`emph_it "  -c"`    : create a tar file
 `emph_it "tar -tzf  archive.tgz"`           : see table of contents
 `emph_it "tar -xvzf archive.tgz"`           : extract the contents into the directory it is invoked from
 "'
+
+alias xargstips='
+echo -e "
+`emph_it "find . -type f | xargs wc -l"` : same as passing all the files to wc
+"'
+
+
 
 
 
