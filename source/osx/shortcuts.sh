@@ -16,7 +16,13 @@ opensublime ()
 
 sopcastToVlc ()
 {
-    /Applications/SopCast.app/Contents/Resources/binaries/m32/sp-sc-auth $1 $2 8902 > /dev/null
+   if test $# -eq 0 ; then
+     echo "sopcastToVlc sopcast_channel port_to_foward_to"
+     return
+   fi
+   echo "now open vlc and stream from http://localhost:$2"
+
+   /Applications/SopCast.app/Contents/Resources/binaries/m32/sp-sc-auth sop://broker.sopcast.com:3912/$1 3908 $2 > /dev/null
 }
 
 postnotification ()
