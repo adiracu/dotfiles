@@ -102,6 +102,13 @@ echo -e " `emph_it      grep options pattern file...`
 `emph_it "grep -e foo -e bar baz.txt "` : search for foo and bar in baz.txt
 "'
 
+alias killtips='
+echo -e " `emph_it      kill -signal_number pid`
+`emph_it "   -9 "`                   : KILL; do NOT use it; process cannot close sockets, clean up temp files etc.
+Try and use
+`emph_it "   -15"`                   : TERM; wait 2 seconds
+"'
+
 
 alias lsoftips='
 echo -e " List open files
