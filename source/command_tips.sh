@@ -205,7 +205,22 @@ echo -e "`emph_it "   -c file_to_check"`                      : --check if the f
 "'
 
 alias sshtips='
-echo -e "`emph_it "cat /dev/dsp | ssh me@remotebox cat > /dev/dsp"` : pipe SSH; play audio remotely (cmd in quotes)
+echo -e "  Set up password-less login:
+    1. ssh-keygen on machine A, if necessary
+    2. create the .ssh directory structure on B, if needed
+    3. check permissions on the .ssh structure on B :
+        rwx------ (700)  .  (.ssh)
+        rwxr-xr-x (755)  .. (~)
+        rw------- (600)  authorized_keys
+
+        This command (quotes needed) does 2&3:
+`emph_it "       ssh user@remotebox test ! -d ~/.ssh && mkdir ~/.ssh ; chmod 700 ~/.ssh ; cd ~/.ssh ; test ! -f authorized_keys && touch authorized_keys ; chmod 600 authorized_keys"`
+    4. copy the public key to B from A (add the quote for the cmd)
+`emph_it "       cat ~/.ssh/id_rsa.pub| ssh user@remotebox cat >> ~/.ssh/authorized_keys"`
+
+Play audio remotely:
+`emph_it "       cat /dev/dsp | ssh user@remotebox cat > /dev/dsp"`
+
 "'
 
 
