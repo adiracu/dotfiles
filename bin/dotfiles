@@ -108,14 +108,14 @@ function link_do() {
   ln -sf ${2} ${3}
 }
 
-# Get all the valid files from the path and run
-# init_do, copy_do or link_do on them
+# Get all the valid files from the path and run the
+#    { init_do | copy_do | link_do } on them
 function do_stuff() {
   local base dest skip
   local searchPath="${HOME}/.dotfiles/$1"
 
   # Run _header function only if declared.
-  [[ $(declare -f "$1_header") ]] && "$1_header"
+  declare -f -F "$1_header" &>/dev/null && "$1_header"
 
   if test ! -d ${searchPath}; then
     e_error "${searchPath} does not exist"
@@ -141,14 +141,14 @@ ${allLabelFilesFolders}"
   OLD_IFS="${IFS}"
   IFS=$'\n'
 
-
+  # go through all the discovered files/folders
   for outer_file_folder in ${allFiles}; do
 
     # $HOME/a
-    # technically $file can be either a file or folder
+    # $outer_file_folder can be either a file or folder
     for file_folder in $("${HOME}"/.dotfiles/bin/get_files_inside_dotfolders "${outer_file_folder}"); do
 
-      # e.g. go from /Users../.dotfiles/link/osx/a/a3.file -> osx/a/a3.file
+      # e.g. go from /Users/username/.dotfiles/link/osx/a/a3.file -> osx/a/a3.file
       file_stripped=${file_folder##$searchPath/}
 
       # if the very first part until the first / is a label, that needs to be stripped as well
@@ -159,8 +159,9 @@ ${allLabelFilesFolders}"
 
       dest="$HOME/$file_stripped"
 
-      # Run _test function only if declared.
-      if [[ $(declare -f "$1_test") ]]; then
+      # Run _test function first, if declared.
+      #  e.g. copy_test
+      if declare -f -F "$1_test" &>/dev/null ; then
         # If _test function returns a string, skip file and print that message.
         skip="$("$1_test" "$file_folder" "$dest")"
         if [[ "$skip" ]]; then
@@ -193,7 +194,7 @@ ${allLabelFilesFolders}"
 }
 
 
-# Functions Declaration END
+# Function Declarations END
 # -----------------------------------
 
 # Ensure that we can actually, like, compile anything.

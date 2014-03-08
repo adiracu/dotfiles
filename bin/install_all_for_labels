@@ -130,7 +130,7 @@ for label in `cat $HOME/.dotfiles/conf/labels_detected` ; do
 
 	PACKAGE_MANAGER=`cat $HOME/.dotfiles/conf/$label/package_manager`
 
-	if !  declare -f installPackageWith-$PACKAGE_MANAGER ; then
+	if ! declare -f -F installPackageWith-$PACKAGE_MANAGER &>/dev/null ; then
 		e_error "No function defined for installing with $PACKAGE_MANAGER"
 		continue
 	fi
@@ -148,7 +148,7 @@ for label in `cat $HOME/.dotfiles/conf/labels_detected` ; do
 	if ! isCommandPresent $PACKAGE_MANAGER ; then
 		e_arrow "Package Manager $PACKAGE_MANAGER isn't installed. Trying to install it."
 
-		if  [[ $(declare -f "installPackageManager-$PACKAGE_MANAGER") ]]; then
+		if  declare -f -F "installPackageManager-$PACKAGE_MANAGER" &>/dev/null ; then
 			installPackageManager-$PACKAGE_MANAGER
 		else
 			e_error "No installer defined for the package manager $PACKAGE_MANAGER"
@@ -172,7 +172,7 @@ for label in `cat $HOME/.dotfiles/conf/labels_detected` ; do
 
 			case $SHOULD_INSTALL_RESPONSE in
 				a)
-					ASSUME_YES=1 ;&				
+					ASSUME_YES=1 ;&
 				y)
 					installPackageWith-$PACKAGE_MANAGER "$packageToInstall" ;;
 				n)
