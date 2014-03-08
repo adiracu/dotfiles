@@ -20,7 +20,7 @@ The script will do:
 5. Files/dotfolders in `copy` are copied into `~/`
 6. Files/dotfolders in `link` are linked into `~/`:
 
-* it modifies the (.bashrc | .zshrc) files so that:
+* the (.bashrc | .zshrc) files present here will:
 
     * source files ending in (*.sh | *.zsh) in `source` in alphanumeric order.
     * source files ending in (*.sh | *.zsh) in `source/valid_label` (see Labels below)
@@ -43,7 +43,7 @@ In order to use labels, 3 files are used:
 
 * `conf/labels_detected` containing the labels detected for this computer
 * `conf/label_detection_rules` contains the detection rules for label
-* `init/detect_labels.sh` is run each time `dotfiles` is called, reading the detection rules and setting `conf/labels_detected`
+* `bin/detect_labels` is run each time `dotfiles` is called, reading the detection rules and setting `conf/labels_detected`
 
 Detection rules have the following format:
 	`label name: command to run : expected string to contain`
@@ -93,12 +93,12 @@ As opposed to doing the entire directory passed, `dotfiles` will traverse it and
 
 
 # Automatically install packages
-#### called manually
+#### has to be called manually
 
-The script `bin/install_all_for_labels` will check if predefined commands exists, and if not, it will try to install it using the appropriate package manager. It uses:
+The script `bin/install_packages_for_labels` will check if predefined commands exists, and if not, it will try to install it using the appropriate package manager. It uses:
 
 	1. the package manager specified in `conf/detected_label/package_manager`
 	2. the rules specified in `conf/detected_label/packages` specified in the form:
 	                         `cmd_to_test:package_to_install_if_cmd_missing`
-	3. if the package manager does not exists, it will try to install it (only for `brew` atm)
+	3. if the package manager does not exists, it will try to install it (only for `brew` on osx atm)
 
