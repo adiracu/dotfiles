@@ -254,7 +254,7 @@ if [[ ! -d ~/.dotfiles ]]; then
 else
 # Or update otherwise
   e_header "Updating dotfiles"
-
+  cd ~/.dotfiles
   git pull
   git submodule update --init --recursive --quiet
 fi
