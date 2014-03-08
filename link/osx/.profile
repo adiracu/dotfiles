@@ -1,7 +1,9 @@
 # MacPorts Installer addition on 2012-09-24_at_19:23:05:
 #   adding an appropriate PATH variable for use with MacPorts.
 export PATH=/opt/local/bin:/opt/local/sbin:/usr/local/mysql/bin:$PATH
-# Finished adapting your PATH environment variable for use with MacPorts.
+
+# added for brew
+export PATH=/usr/loca/bin:$PATH
 
 
 #python installed from ports
