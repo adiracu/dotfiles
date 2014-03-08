@@ -7,7 +7,10 @@ Inspired/Copied from https://raw.github.com/cowboy/dotfiles/
 
 # Refresher
 
-running ~/.dotfiles/bin/dotfiles will do:
+running ~/.dotfiles/bin/dotfiles has the prerequisites:
+
+* have 'git' instaled
+    will do:
 
 1. Git is installed if necessary, via pacman. If there is no pacman, it fails.
 2. This repo is cloned or updated into `~/.dotfiles` the directory
