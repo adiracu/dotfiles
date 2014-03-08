@@ -22,8 +22,8 @@ The script will do:
 
 * it modifies the (.bashrc | .zshrc) files so that:
 
-** source files ending in (*.sh | *.zsh) in `source` in alphanumeric order.
-** source files ending in (*.sh | *.zsh) in `source/valid_label` (see Labels below)
+    * source files ending in (*.sh | *.zsh) in `source` in alphanumeric order.
+    * source files ending in (*.sh | *.zsh) in `source/valid_label` (see Labels below)
 
 N.B. Files overwritten by `copy` and `link` are saved into the `backups` directory
 
