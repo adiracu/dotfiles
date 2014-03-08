@@ -9,30 +9,24 @@ Inspired/Copied from https://raw.github.com/cowboy/dotfiles/
 
 running ~/.dotfiles/bin/dotfiles has the prerequisites:
 
-* have 'git' instaled
-    will do:
+* have `git` instaled
 
-1. Git is installed if necessary, via pacman. If there is no pacman, it fails.
-2. This repo is cloned or updated into `~/.dotfiles` the directory
-3. Files in `bin` are added to the PATH
+The script will do:
+
+1. This repo is cloned or updated into `~/.dotfiles` the directory
+2. Files in `bin` are added to the PATH
+3. `bin/detect_labels` is ran to detect the valid labels
 4. Files/dotfolders in `init` are executed, in alphanumeric order
 5. Files/dotfolders in `copy` are copied into `~/`
-6. Files/dotfolders in `link` are linked into `~/`
+6. Files/dotfolders in `link` are linked into `~/`:
 
-, where dotfs means files
+* it modifies the (.bashrc | .zshrc) files so that:
+** source files ending in (*.sh | *.zsh) in `source` in alphanumeric order.
+** source files ending in (*.sh | *.zsh) in `source/valid_label` (see Labels below)
 
 N.B. Files overwritten by `copy` and `link` are saved into the `backups` directory
 
 N.B.2 Files with the exact filename found in `conf/dotfiles_ignore` will be skipped
-
-
-Also, the current setup (.bashrc | .zshrc) will :
-
-* source files ending in (*.sh | *.zsh) in `source` in alphanumeric order.
-* source files ending in (*.sh | *.zsh) in `source/valid_label` (see Labels below)
-
-whenever a new shell is opened.
-
 
 Others:
 
