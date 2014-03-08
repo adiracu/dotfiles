@@ -58,13 +58,13 @@ function askForConfirmation() {
 			e_question "${COLOR_GREEN}$1${COLOR_OFF} command seems to be missing. Do you want to install it (via package ${COLOR_GREEN}$2${COLOR_OFF})? ."
 
 			while [[ ! $SHOULD_INSTALL_RESPONSE =~ [y|a|n|s] ]]; do
-	   		 echo -e "    ${COLOR_BOLD_GREEN}(y)${COLOR_OFF}es, yes to ${COLOR_BOLD_GREEN}(a)${COLOR_OFF}ll, ${COLOR_BOLD_GREEN}(n)${COLOR_OFF}o, ${COLOR_BOLD_GREEN}(s)${COLOR_OFF}kip all for this label  (5 second timeout, defaults to ${COLOR_BOLD_GREEN}no${COLOR_OFF})? ${COLOR_OFF}"
+	   		 echo -e "    ${COLOR_BOLD_GREEN}(y)${COLOR_OFF}es, yes to ${COLOR_BOLD_GREEN}(a)${COLOR_OFF}ll, ${COLOR_BOLD_GREEN}(n)${COLOR_OFF}o, ${COLOR_BOLD_GREEN}(s)${COLOR_OFF}kip all for this label  (10 second timeout, defaults to ${COLOR_BOLD_GREEN}no${COLOR_OFF})? ${COLOR_OFF}"
 				# -r     : don't allow backslashes
 				# -s     : don't echo key presses back to the terminal
 				# -n 1   : only allow 1 character
 				# -t 10  : timeout of 10 seconds
 				SHOULD_INSTALL_RESPONSE="n"
-				read -r -s -n 1 -t 5 SHOULD_INSTALL_RESPONSE
+				read -r -s -n 1 -t 10 SHOULD_INSTALL_RESPONSE
 			done
 }
 
