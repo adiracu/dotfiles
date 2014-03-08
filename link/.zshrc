@@ -34,13 +34,13 @@ source $HOME/.dotfiles/submodules/antigen/antigen.zsh
 # Load the oh-my-zsh's library.
 antigen use oh-my-zsh
 
-	# Bundles from the default repo (robbyrussell's oh-my-zsh).
+# Bundles from the default repo (robbyrussell's oh-my-zsh).
 antigen bundle git
 
-	# Completion for the pip command
+# Completion for the pip command
 antigen bundle pip
 
-	# type any previous command and press up down
+# type any previous command and press up down
 antigen bundle history-substring-search
 
 
