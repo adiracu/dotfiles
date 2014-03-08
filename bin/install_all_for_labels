@@ -172,8 +172,10 @@ for label in `cat $HOME/.dotfiles/conf/labels_detected` ; do
 
 			case $SHOULD_INSTALL_RESPONSE in
 				a)
-					ASSUME_YES=1 ;&
-				y)
+					ASSUME_YES=1
+					installPackageWith-$PACKAGE_MANAGER "$packageToInstall" ;;
+				y)	# only bash 4.0 supports the switch fall-through &;
+				   # just copy paste the installPackage.. in both cases
 					installPackageWith-$PACKAGE_MANAGER "$packageToInstall" ;;
 				n)
 					e_error "Skipping $packageToInstall" ;;
