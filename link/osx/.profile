@@ -3,7 +3,7 @@
 export PATH=/opt/local/bin:/opt/local/sbin:/usr/local/mysql/bin:$PATH
 
 # added for brew
-export PATH=/usr/loca/bin:$PATH
+export PATH=/usr/local/bin:$PATH
 
 
 #python installed from ports
