@@ -197,13 +197,6 @@ ${allLabelFilesFolders}"
 # Function Declarations END
 # -----------------------------------
 
-# TODO : this should be deleted; gcc is no longer used
-# Ensure that we can actually, like, compile anything.
-#if [[ ! "$(type -P gcc)" && "$OSTYPE" =~ ^darwin ]]; then
-#  e_error "The XCode Command Line Tools must be installed first."
-#  exit 1
-#fi
-
 # If Git is not installed...
 if [[ ! "$(type -P git)" ]]; then
   # Don't bother installing, just complain
