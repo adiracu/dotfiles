@@ -21,6 +21,7 @@ The script will do:
 6. Files/dotfolders in `link` are linked into `~/`:
 
 * it modifies the (.bashrc | .zshrc) files so that:
+
 ** source files ending in (*.sh | *.zsh) in `source` in alphanumeric order.
 ** source files ending in (*.sh | *.zsh) in `source/valid_label` (see Labels below)
 
