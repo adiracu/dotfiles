@@ -12,5 +12,7 @@ Change default shell used :
 	brew install by default in /usr/local/bin so:
 		1. add /usr/local/bin to /etc/shells
 		2. chsh -s /usr/local/bin/zsh
+		N.B. which zsh will still return the old one from /bin/zsh
+		     but the brew one will be the one running
 SSH password-less stuff : sshtips
 EOF
