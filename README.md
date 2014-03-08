@@ -7,9 +7,9 @@ Inspired/Copied from https://raw.github.com/cowboy/dotfiles/
 
 # Refresher
 
-running ~/.dotfiles/bin/dotfiles has the prerequisites:
+running ~/.dotfiles/bin/dotfiles has the prerequisite of:
 
-* have `git` instaled
+* having `git` installed
 
 The script will do:
 
