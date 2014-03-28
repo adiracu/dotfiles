@@ -9,6 +9,7 @@ alias ls='ls --color=auto'
 
 alias grep='grep --color=auto'
 alias grpe='grep'
+alias grepexclude='grep --color=auto --exclude-dir=".svn" --exclude-dir=".svn" --exclude-dir=".metadata" --exclude-dit=".git"'
 
 alias jobs='jobs -l'
 
