@@ -94,6 +94,7 @@ echo -e " `emph_it      grep options pattern file...`
 `emph_it "   -E "`                      : --extended-regexp, use extended regular expression. See `emph_it egrep`
 `emph_it "   -i "`                      : --ignore-case
 `emph_it "   -n "`                      : --line-number, output line preceded by line number
+`emph_it "   -o "`                      : --only-matching, output only the matching part
 `emph_it "   -r "`                      : -R, --recursive, search recursively
 `emph_it "   -v "`                      : --invert--match, all the lines that do not match
 `emph_it "   -w "`                      : --word-regexp, the expression is search for as a word
