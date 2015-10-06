@@ -9,7 +9,7 @@ alias killmouseacc='defaults write .GlobalPreferences com.apple.mouse.scaling -1
 
 opensublime ()
 {
-    /usr/bin/open "$@" -a "Sublime Text 2"
+    /usr/bin/open "$@" -a "Sublime Text"
 }
 
 
