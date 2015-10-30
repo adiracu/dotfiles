@@ -32,9 +32,9 @@ manjump () {    # Bash
 
 psefgrep()
 {
-if psef | grep $1 &>/dev/null ; then
+if psef | grep $@ &>/dev/null ; then
 	psef | head -n 1
-	psef | grep $1
+	psef | grep $@
 fi
 }
 
