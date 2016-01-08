@@ -4,3 +4,6 @@ tree:tree
 wget:wget
 zsh:zsh
 terminal-notifier:terminal-notifier
+chisel:chisel
+pidof:pidof
+class-dump:class-dump

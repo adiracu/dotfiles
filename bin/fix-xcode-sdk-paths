@@ -16,7 +16,10 @@ import argparse
 import subprocess
 import os
 
-source_path = "/SDKs"
+if os.path.isdir("/Volumes/Development"):
+	source_path="/Volumes/Development/SDKs"
+else:
+	source_path="/SDKs"
 
 parser = argparse.ArgumentParser()
 parser.add_argument('xcodePath', help='path to Xcode', nargs='?')
