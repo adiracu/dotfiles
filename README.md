@@ -3,7 +3,7 @@ Inspired/Copied from https://raw.github.com/cowboy/dotfiles/
 # Installation
 
 
-`curl --silent https://raw.github.com/rackenstein/dotfiles/master/bin/dotfiles | bash`
+`curl --silent https://raw.githubusercontent.com/rackenstein/dotfiles/master/bin/dotfiles | bash`
 
 # Refresher
 
