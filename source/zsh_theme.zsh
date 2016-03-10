@@ -101,7 +101,7 @@ function git_prompt_info() {
 
 __IS_CURR_DIR_GIT='0'
 
-__SMILEY_FACE="%(?,,:()"
+__SMILEY_FACE="%(?,,:( %?)"
 __TIME="%T"
 # Before each command
 function precmd() {
