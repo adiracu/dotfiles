@@ -243,6 +243,10 @@ echo -e "
 `emph_it "find . -type f | xargs wc -l"` : same as passing all the files to wc
 "'
 
+alias codesigntips='
+echo -e "`emph_it "  -d --entitlements - Foo.app"`    : extract embedded entitlements
+`emph_it "  -dvv Foo.app"`    : verbose output; check if signed
+"'
 
 
 
