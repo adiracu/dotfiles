@@ -50,12 +50,11 @@ md5oftext()  { echo -n $1 | md5  | awk '{print toupper($1)}' ; }
 
 function beep() { echo -e "\a" }
 
-function startTimerInMinutes
-{
-        local OLD_IFS="${IFS}"
-        IFS=":"
-        local ARR=( $1 )
         local SECONDS=$((  (ARR[0] * 60 * 60) + (ARR[1] * 60) + ARR[2]  ))
+
+function startTimerInSeconds
+{
+        local SECONDS=$((  $1  ))
         local START=$(date +%s)
         local END=$((START + SECONDS))
         local CUR=$START
@@ -70,10 +69,21 @@ function startTimerInMinutes
 
                 sleep 1
         done
-        IFS="${OLD_IFS}"
-        echo "        "
         beep
         postnotification "Timer $1 finished." "Timer Finished"
 }
 
+function startTimerInMinutes
+{
+        local SECONDS=$((  ($1 * 60)  ))
+        startTimerInSeconds $SECONDS
+}
+
+function startRepeatingTimerInSeconds
+{
+        while true 
+        do
+                startTimerInSeconds $1
+        done
+}
 

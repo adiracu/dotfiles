@@ -33,6 +33,8 @@ source $HOME/.dotfiles/bin-internal/antigen.zsh
 
 # Load the oh-my-zsh's library.
 antigen use oh-my-zsh
+unsetopt inc_append_history
+unsetopt share_history
 
 # Bundles from the default repo (robbyrussell's oh-my-zsh).
 antigen bundle git
