@@ -23,9 +23,9 @@ mansearch () {    # Bash
 }
 
 # APP SHORTCUTS
-opensublime () { echo -n "$NOT_YET_DONE" ; }
+sub () { echo -n "$NOT_YET_DONE" ; }
 
-    # TWO ARGUMENTS; message and title
+# TWO ARGUMENTS; message and title
 postnotification () { echo -n "$NOT_YET_DONE" ; }
 
 # Calculator

@@ -1,6 +1,6 @@
 
 
-opensublime ()
+sub ()
 {
     /usr/bin/open "$@" -a "Sublime Text"
 }
