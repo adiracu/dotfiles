@@ -101,16 +101,15 @@ function git_prompt_info() {
 
 __IS_CURR_DIR_GIT='0'
 
-__SMILEY_FACE="%(?,,:( %?)"
+__SMILEY_FACE="%(?,, ⬆️ ☹️  %?)"
 __TIME="%T"
 # Before each command
 function precmd() {
    if test ${__IS_CURR_DIR_GIT} = '1' ; then
       # git info
-      RPROMPT='${__SMILEY_FACE} $(git_prompt_info) ${__TIME}'
+      RPROMPT='$(git_prompt_info) ${__TIME}'
    else
-      # sad smiley + time
-      RPROMPT="${__SMILEY_FACE} ${__TIME}"
+      RPROMPT="${__TIME}"
    fi
 }
 
@@ -140,7 +139,7 @@ CURR_DIR="%{$fg[yellow]%}%c"
 PRIVILIGES="%(!,#,$)"
 
 
-PROMPT="[%{$reset_color%}${USER}@${HOST}%{$reset_color%} ${CURR_DIR}%{$fg[cyan]%}]${PRIVILIGES}%{$reset_color%} "
+PROMPT="[%{$reset_color%}${USER}@${HOST}%{$reset_color%} ${CURR_DIR}%{$fg[cyan]%}${__SMILEY_FACE}]${PRIVILIGES}%{$reset_color%} "
 
 # fake a ch pwd so that the current git status is read and drawn if necessary
 chpwd
