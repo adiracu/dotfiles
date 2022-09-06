@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-source $HOME/.dotfiles/bin/antigen.zsh
+source $HOME/.dotfiles/bin-internal/antigen.zsh
 
 # antige bundle [<url> [<loc>]]
 #	 		- Load the plugin found at <url>, and location <loc>
@@ -62,7 +62,7 @@ PATH=~/.dotfiles/bin:$PATH
 export PATH
 
 function src_zsh() {
-  source source_files --extension zsh
+  source ~/.dotfiles/bin-internal/source_files --extension zsh
 }
 
 # Run dotfiles script, then source.

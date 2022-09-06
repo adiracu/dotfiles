@@ -128,7 +128,7 @@ function do_stuff() {
   # And the dot folders there.
   allImmediateDotfolders=`find ${searchPath} -maxdepth 1 -type d -name ".*"`
   # All files & folders belonging to the current labels
-  allLabelFilesFolders=`"${HOME}"/.dotfiles/bin/get_files_folders_for_labels "${searchPath}"`
+  allLabelFilesFolders=`"${HOME}"/.dotfiles/bin-internal/get_files_folders_for_labels "${searchPath}"`
 
   allFiles="${allImmediateFiles}
 ${allImmediateDotfolders}
@@ -146,7 +146,7 @@ ${allLabelFilesFolders}"
 
     # $HOME/a
     # $outer_file_folder can be either a file or folder
-    for file_folder in $("${HOME}"/.dotfiles/bin/get_files_inside_dotfolders "${outer_file_folder}"); do
+    for file_folder in $("${HOME}"/.dotfiles/bin-internal/get_files_inside_dotfolders "${outer_file_folder}"); do
 
       # e.g. go from /Users/username/.dotfiles/link/osx/a/a3.file -> osx/a/a3.file
       file_stripped=${file_folder##$searchPath/}
@@ -281,7 +281,7 @@ shopt -s dotglob
 shopt -s nullglob
 
 # Create caches directory, if it doesn't already exist.
-mkdir -p "$HOME/.dotfiles/caches"
+# mkdir -p "$HOME/.dotfiles/caches"
 
 # If backups are needed, this is where they'll go.
 backup_dir="$HOME/.dotfiles/backups/$(date "+%Y_%m_%d-%H_%M_%S")/"
@@ -290,7 +290,7 @@ backup=
 
 # Detect the labels
 e_header "Detecting labels "
-bash "${HOME}/.dotfiles/bin/detect_labels"
+bash "${HOME}/.dotfiles/bin-internal/detect_labels"
 
 # Execute code for each file in these subdirectories.
 do_stuff "init"

@@ -15,16 +15,15 @@ The script will do:
 
 1. This repo is cloned or updated into `~/.dotfiles` the directory
 2. Files in `bin` are added to the PATH
-3. `bin/detect_labels` is ran to detect the valid labels according to `conf/label_detection_rules`
-4. Files/dotfolders in `init` are executed, in alphanumeric order
-5. Files/dotfolders in `copy` are copied into `~/`
+3. `bin-internal/detect_labels` is ran to detect the valid labels according to `conf/label_detection_rules`
 6. Files/dotfolders in `link` are linked into `~/`:
-7. Optionally, call `install_packages_for_labels` if you want
-
 * the (.bashrc | .zshrc) files present here will:
 
     * source files ending in (*.sh | *.zsh) in `source` in alphanumeric order.
     * source files ending in (*.sh | *.zsh) in `source/valid_label` (see Labels below)
+7. Optionally, call `install_packages_for_dotfile_labels` if you want
+
+
 
 Notes: 
 
@@ -33,6 +32,7 @@ Notes:
 * Files in `caches` are cached files.
 * Files in `conf` just sit there. If a config file doesn't need to go to `~/`, put it there.
 * Files in `bin` are executable shell scripts
+* There were also `init` & `copy` folders that I've deleted
 
 # Labels
 
@@ -93,7 +93,7 @@ As opposed to doing the entire directory passed, `dotfiles` will traverse it and
 
 # Install Packages - has to be called manually
 
-The script `bin/install_packages_for_labels` will check if predefined commands exists, and if not, it will try to install it using the appropriate package manager. It uses:
+The script `bin/install_packages_for_dotfile_labels` will check if predefined commands exists, and if not, it will try to install it using the appropriate package manager. It uses:
 
 	1. the package manager specified in `conf/detected_label/package_manager`
 	2. the rules specified in `conf/detected_label/packages` specified in the form:

@@ -4,7 +4,7 @@ PATH=~/.dotfiles/bin:$PATH
 export PATH
 
 function src_bash() {
-  source source_files --extension sh
+  source ~/.dotfiles/bin-internal/source_files --extension sh
 }
 
 # Run dotfiles script, then source.
