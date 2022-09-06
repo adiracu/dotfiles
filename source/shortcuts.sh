@@ -1,41 +1,25 @@
 NOT_YET_DONE="Not overwritten by OS specific function"
 # Typos / Shortcuts
 
-alias ll='ls -l'
+alias ll='ls -lh'
 alias clear='echo "Use CTRL+L"'
 
-# OSX doesnt have this..
-alias ls='ls --color=auto'
 
 alias grep='grep --color=auto'
 alias grpe='grep'
-alias grepexclude='grep --color=auto --exclude-dir=".svn" --exclude-dir=".svn" --exclude-dir=".metadata" --exclude-dit=".git"'
-
-alias jobs='jobs -l'
-
-# overwritten by osx; needs to be a function because it's used in psefgrep
-#   with just an alias, it get replaced to -eF even for osx
-psef () { ps -eF $@ ; }
+alias grepexclude='grep --color=auto --exclude-dir={".svn",".metadata",".git"}'
 
 # man
-manjump () {    # Bash
+mansearch () {    # Bash
     local pages string
     if test $# -ne 2; then
-    	echo "Usage:  manjump  regex_to_search_for  page_name"
+    	echo "Usage:  mansearch page_name  regex_to_search_for"
     	return;
     fi
-    pages=(${@:2})
-    string="$1"
+    pages=(${@:1})
+    string="$2"
 
     man -P "less -p \"$string\" " ${pages[@]}
-}
-
-psefgrep()
-{
-if psef | grep $@ &>/dev/null ; then
-	psef | head -n 1
-	psef | grep $@
-fi
 }
 
 # APP SHORTCUTS
@@ -60,26 +44,13 @@ extension() { echo ${1##*.} ; }
 size() { du -c -h $1 | grep total ; }
 
 
-# GIT/SVN
-alias countgitcommits='git log --pretty=format:'' | wc -l'
-
-alias gstat='git status'
-gcomm() { git commit -m "$1" ; }
-gcommall() { git commit -a -m "$1" ; }
-gadd() { git add "$@" ; }
-
-svnreposize() { svn list -vR $1 | awk '{tmp=match($3,/[0-9]/);if(tmp){sum+=$3; i++}} END {print "\ntotal size= " sum/1024000" MB" "\nnumber of files= " i/1000 " K"}' ;  }
-
-
-# SSH
-sshnopub() { ssh -o PubkeyAuthentication=no $1 ; }
-
 # useful little ones
-sha1oftext() { echo -n $1 | sha1sum | awk '{print toupper($1)}' ; }
-md5oftext()  { echo -n $1 | md5sum  | awk '{print toupper($1)}' ; }
+sha1oftext() { echo -n $1 | sha | awk '{print toupper($1)}' ; }
+md5oftext()  { echo -n $1 | md5  | awk '{print toupper($1)}' ; }
 
+function beep() { echo -e "\a" }
 
-function countdown
+function startTimerInMinutes
 {
         local OLD_IFS="${IFS}"
         IFS=":"
@@ -101,6 +72,7 @@ function countdown
         done
         IFS="${OLD_IFS}"
         echo "        "
+        beep
         postnotification "Timer $1 finished." "Timer Finished"
 }
 

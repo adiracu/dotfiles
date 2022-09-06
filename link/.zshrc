@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-source $HOME/.dotfiles/submodules/antigen/antigen.zsh
+source $HOME/.dotfiles/bin/antigen.zsh
 
 # antige bundle [<url> [<loc>]]
 #	 		- Load the plugin found at <url>, and location <loc>

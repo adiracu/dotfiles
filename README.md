@@ -15,25 +15,24 @@ The script will do:
 
 1. This repo is cloned or updated into `~/.dotfiles` the directory
 2. Files in `bin` are added to the PATH
-3. `bin/detect_labels` is ran to detect the valid labels
+3. `bin/detect_labels` is ran to detect the valid labels according to `conf/label_detection_rules`
 4. Files/dotfolders in `init` are executed, in alphanumeric order
 5. Files/dotfolders in `copy` are copied into `~/`
 6. Files/dotfolders in `link` are linked into `~/`:
+7. Optionally, call `install_packages_for_labels` if you want
 
 * the (.bashrc | .zshrc) files present here will:
 
     * source files ending in (*.sh | *.zsh) in `source` in alphanumeric order.
     * source files ending in (*.sh | *.zsh) in `source/valid_label` (see Labels below)
 
-N.B. Files overwritten by `copy` and `link` are saved into the `backups` directory
+Notes: 
 
-N.B.2 Files with the exact filename found in `conf/dotfiles_ignore` will be skipped
-
-Others:
-
-1. Files in `caches` are cached files.
-2. Files in `conf` just sit there. If a config file doesn't need to go to `~/`, put it there.
-3. Files in `bin` are executable shell scripts
+* Files overwritten by `copy` and `link` are saved into the `backups` directory
+* Files with the exact filename found in `conf/dotfiles_ignore` will be skipped from all steps
+* Files in `caches` are cached files.
+* Files in `conf` just sit there. If a config file doesn't need to go to `~/`, put it there.
+* Files in `bin` are executable shell scripts
 
 # Labels
 
@@ -92,8 +91,7 @@ As opposed to doing the entire directory passed, `dotfiles` will traverse it and
 
 
 
-# Automatically install packages
-#### has to be called manually
+# Install Packages - has to be called manually
 
 The script `bin/install_packages_for_labels` will check if predefined commands exists, and if not, it will try to install it using the appropriate package manager. It uses:
 

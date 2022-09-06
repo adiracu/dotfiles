@@ -8,7 +8,7 @@ if [[ "$1" == "-h" || "$1" == "--help" ]]; then cat <<HELP
 Usage: $(basename "$0")
 
 See the README for documentation.
-https://github.com/rackenstein/dotfiles
+https://github.com/adiracu/dotfiles
 HELP
 exit; fi
 
@@ -241,22 +241,23 @@ if [[ ! -d ~/.dotfiles ]]; then
 
   if [[ ! "$(type -p ssh)" ]]; then
     e_header "Downloading dotfiles via https"
-    git clone --recursive https://github.com/rackenstein/dotfiles.git ~/.dotfiles
+    git clone --recursive https://github.com/adiracu/dotfiles.git ~/.dotfiles
   else
     e_header "Downloading dotfiles via ssh"
-    git clone --recursive git@github.com:rackenstein/dotfiles.git ~/.dotfiles
+    git clone --recursive git@github.com:adiracu/dotfiles.git ~/.dotfiles
 
     if [[ ! -d ~/.dotfiles ]]; then
       e_header "Downloading dotfiles via https"
-      git clone --recursive https://github.com/rackenstein/dotfiles.git ~/.dotfiles
+      git clone --recursive https://github.com/adiracu/dotfiles.git ~/.dotfiles
     fi
   fi
+  curl -L git.io/antigen > ~/.dotfiles/bin/antigen.zsh
 else
 # Or update otherwise
   e_header "Updating dotfiles"
   cd ~/.dotfiles
   git pull
-  git submodule update --init --recursive --quiet
+  curl -L git.io/antigen > bin/antigen.zsh
 fi
 
 # If we still don't have the folder created, bail out
