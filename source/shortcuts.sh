@@ -1,4 +1,8 @@
 NOT_YET_DONE="Not overwritten by OS specific function"
+
+# Path
+export JAVA_HOME=/Applications/Android\ Studio.app/Contents/jre/Contents/Home
+
 # Typos / Shortcuts
 
 alias ll='ls -lh'
